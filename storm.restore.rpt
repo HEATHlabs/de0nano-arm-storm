@@ -1,0 +1,129 @@
+Restore Archived Project report for storm
+Mon Mar 16 22:40:56 2015
+Quartus II 64-Bit Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Web Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Restore Archived Project Summary
+  3. Restore Archived Project Messages
+  4. Files Restored
+  5. Files Not Restored
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 1991-2013 Altera Corporation
+Your use of Altera Corporation's design tools, logic functions 
+and other software and tools, and its AMPP partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Altera Program License 
+Subscription Agreement, Altera MegaCore Function License 
+Agreement, or other applicable license agreement, including, 
+without limitation, that your use is for the sole purpose of 
+programming logic devices manufactured by Altera and sold by 
+Altera or its authorized distributors.  Please refer to the 
+applicable agreement for further details.
+
+
+
++-------------------------------------------------------------------------+
+; Restore Archived Project Summary                                        ;
++---------------------------------+---------------------------------------+
+; Restore Archived Project Status ; Successful - Mon Mar 16 22:40:56 2015 ;
+; Revision Name                   ; storm                                 ;
+; Top-level Entity Name           ; STORM_SoC_basic                       ;
+; Family                          ; Cyclone IV E                          ;
++---------------------------------+---------------------------------------+
+
+
++-----------------------------------+
+; Restore Archived Project Messages ;
++-----------------------------------+
+Info: Successfully restored 'Q:/arm-storm-sdram/storm_sdram_newrst.qar' into the 'D:\\arm-storm-sdram_sn/' directory
+Info: Generated report 'storm.restore.rpt'
+Info (23030): Evaluation of Tcl script c:/altera/13.0sp1/quartus/common/tcl/apps/qpm/qar.tcl was successful
+Info: Quartus II 64-Bit Shell was successful. 0 errors, 0 warnings
+    Info: Peak virtual memory: 288 megabytes
+    Info: Processing ended: Mon Mar 16 22:40:56 2015
+    Info: Elapsed time: 00:00:02
+    Info: Total CPU time (on all processors): 00:00:01
+
+
++-----------------------------------------------------------------------+
+; Files Restored                                                        ;
++-----------------------------------------------------------------------+
+; File Name                                                             ;
++-----------------------------------------------------------------------+
+; assignment_defaults.qdf                                               ;
+; de0nano.cof                                                           ;
+; incremental_db/compiled_partitions/storm.db_info                      ;
+; sdram.stp                                                             ;
+; sdram_auto_stripped.stp                                               ;
+; storm.qsf                                                             ;
+; storm_assignment_defaults.qdf                                         ;
+; storm_core/rtl/ALU.vhd                                                ;
+; storm_core/rtl/BARREL_SHIFTER.vhd                                     ;
+; storm_core/rtl/BUS_UNIT.vhd                                           ;
+; storm_core/rtl/CACHE.vhd                                              ;
+; storm_core/rtl/CORE.vhd                                               ;
+; storm_core/rtl/CORE_PKG.vhd                                           ;
+; storm_core/rtl/FLOW_CTRL.vhd                                          ;
+; storm_core/rtl/LOAD_STORE_UNIT.vhd                                    ;
+; storm_core/rtl/MC_SYS.vhd                                             ;
+; storm_core/rtl/MS_UNIT.vhd                                            ;
+; storm_core/rtl/MULTIPLY_UNIT.vhd                                      ;
+; storm_core/rtl/OPCODE_DECODER.vhd                                     ;
+; storm_core/rtl/OPERAND_UNIT.vhd                                       ;
+; storm_core/rtl/REG_FILE.vhd                                           ;
+; storm_core/rtl/STORM_TOP.vhd                                          ;
+; storm_core/rtl/WB_UNIT.vhd                                            ;
+; storm_sdram.qpf                                                       ;
+; storm_soc/basic_system/rtl/STORM_SoC_basic.vhd                        ;
+; storm_soc/components/boot_rom/rtl/BOOT_ROM_FILE.vhd                   ;
+; storm_soc/components/i2c_controller/rtl/vhdl/i2c_master_bit_ctrl.vhd  ;
+; storm_soc/components/i2c_controller/rtl/vhdl/i2c_master_byte_ctrl.vhd ;
+; storm_soc/components/i2c_controller/rtl/vhdl/i2c_master_top.vhd       ;
+; storm_soc/components/io_controller/rtl/GP_IO_CTRL.vhd                 ;
+; storm_soc/components/miniuart/rtl/vhdl/MINI_UART.vhd                  ;
+; storm_soc/components/miniuart/rtl/vhdl/Rxunit.vhd                     ;
+; storm_soc/components/miniuart/rtl/vhdl/Txunit.vhd                     ;
+; storm_soc/components/miniuart/rtl/vhdl/utils.vhd                      ;
+; storm_soc/components/pwm_controller/rtl/PWM_CTRL.vhd                  ;
+; storm_soc/components/reset_protector/rtl/RST_PROTECT_new.vhd          ;
+; storm_soc/components/spi_controller/rtl/verilog/spi_clgen.v           ;
+; storm_soc/components/spi_controller/rtl/verilog/spi_defines.v         ;
+; storm_soc/components/spi_controller/rtl/verilog/spi_shift.v           ;
+; storm_soc/components/spi_controller/rtl/verilog/spi_top.v             ;
+; storm_soc/components/spi_controller/rtl/verilog/timescale.v           ;
+; storm_soc/components/sram_memory/rtl/MEMORY.vhd                       ;
+; storm_soc/components/timer/rtl/TIMER.vhd                              ;
+; storm_soc/components/vector_interrupt_controller/rtl/VIC.vhd          ;
+; storm_soc/components/wb_sdram_ctrl/arbiter.v                          ;
+; storm_soc/components/wb_sdram_ctrl/bufram.v                           ;
+; storm_soc/components/wb_sdram_ctrl/dpram_altera.v                     ;
+; storm_soc/components/wb_sdram_ctrl/dpram_generic.v                    ;
+; storm_soc/components/wb_sdram_ctrl/dual_clock_fifo.v                  ;
+; storm_soc/components/wb_sdram_ctrl/sdram_ctrl.v                       ;
+; storm_soc/components/wb_sdram_ctrl/wb_port.v                          ;
+; storm_soc/components/wb_sdram_ctrl/wb_sdram_ctrl.v                    ;
+; system_pll.cmp                                                        ;
+; system_pll.ppf                                                        ;
+; system_pll.qip                                                        ;
+; system_pll.vhd                                                        ;
++-----------------------------------------------------------------------+
+
+
++--------------------+
+; Files Not Restored ;
++--------------------+
+; File Name          ;
++--------------------+
+
+

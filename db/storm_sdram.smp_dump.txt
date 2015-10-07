@@ -1,0 +1,126 @@
+
+State Machine - |STORM_SoC_basic|i2c_master_top:I2C_CONTROLLER_0|i2c_master_byte_ctrl:byte_ctrl|\statemachine:c_state
+Name \statemachine:c_state.st_stop \statemachine:c_state.st_ack \statemachine:c_state.st_write \statemachine:c_state.st_read \statemachine:c_state.st_start \statemachine:c_state.st_idle 
+\statemachine:c_state.st_idle 0 0 0 0 0 0 
+\statemachine:c_state.st_start 0 0 0 0 1 1 
+\statemachine:c_state.st_read 0 0 0 1 0 1 
+\statemachine:c_state.st_write 0 0 1 0 0 1 
+\statemachine:c_state.st_ack 0 1 0 0 0 1 
+\statemachine:c_state.st_stop 1 0 0 0 0 1 
+
+State Machine - |STORM_SoC_basic|i2c_master_top:I2C_CONTROLLER_0|i2c_master_byte_ctrl:byte_ctrl|i2c_master_bit_ctrl:bit_ctrl|c_state
+Name c_state.wr_d c_state.wr_c c_state.wr_b c_state.wr_a c_state.rd_d c_state.rd_c c_state.rd_b c_state.rd_a c_state.stop_d c_state.stop_c c_state.stop_b c_state.stop_a c_state.start_e c_state.start_d c_state.start_c c_state.start_b c_state.start_a c_state.idle 
+c_state.idle 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 
+c_state.start_a 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 
+c_state.start_b 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 1 
+c_state.start_c 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 1 
+c_state.start_d 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 1 
+c_state.start_e 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 1 
+c_state.stop_a 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 1 
+c_state.stop_b 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 1 
+c_state.stop_c 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 1 
+c_state.stop_d 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 
+c_state.rd_a 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 1 
+c_state.rd_b 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 1 
+c_state.rd_c 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 1 
+c_state.rd_d 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 1 
+c_state.wr_a 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 
+c_state.wr_b 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 
+c_state.wr_c 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 
+c_state.wr_d 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 
+
+State Machine - |STORM_SoC_basic|amber_uart:GP_UART_1|rxd_state
+Name rxd_state.RXD_STOP rxd_state.RXD_DATA7 rxd_state.RXD_DATA6 rxd_state.RXD_DATA5 rxd_state.RXD_DATA4 rxd_state.RXD_DATA3 rxd_state.RXD_DATA2 rxd_state.RXD_DATA1 rxd_state.RXD_DATA0 rxd_state.RXD_START_MID1 rxd_state.RXD_START_MID rxd_state.RXD_START rxd_state.RXD_IDLE 
+rxd_state.RXD_IDLE 0 0 0 0 0 0 0 0 0 0 0 0 0 
+rxd_state.RXD_START 0 0 0 0 0 0 0 0 0 0 0 1 1 
+rxd_state.RXD_START_MID 0 0 0 0 0 0 0 0 0 0 1 0 1 
+rxd_state.RXD_START_MID1 0 0 0 0 0 0 0 0 0 1 0 0 1 
+rxd_state.RXD_DATA0 0 0 0 0 0 0 0 0 1 0 0 0 1 
+rxd_state.RXD_DATA1 0 0 0 0 0 0 0 1 0 0 0 0 1 
+rxd_state.RXD_DATA2 0 0 0 0 0 0 1 0 0 0 0 0 1 
+rxd_state.RXD_DATA3 0 0 0 0 0 1 0 0 0 0 0 0 1 
+rxd_state.RXD_DATA4 0 0 0 0 1 0 0 0 0 0 0 0 1 
+rxd_state.RXD_DATA5 0 0 0 1 0 0 0 0 0 0 0 0 1 
+rxd_state.RXD_DATA6 0 0 1 0 0 0 0 0 0 0 0 0 1 
+rxd_state.RXD_DATA7 0 1 0 0 0 0 0 0 0 0 0 0 1 
+rxd_state.RXD_STOP 1 0 0 0 0 0 0 0 0 0 0 0 1 
+
+State Machine - |STORM_SoC_basic|amber_uart:GP_UART_1|txd_state
+Name txd_state.TXD_STOP3 txd_state.TXD_STOP2 txd_state.TXD_STOP1 txd_state.TXD_DATA7 txd_state.TXD_DATA6 txd_state.TXD_DATA5 txd_state.TXD_DATA4 txd_state.TXD_DATA3 txd_state.TXD_DATA2 txd_state.TXD_DATA1 txd_state.TXD_DATA0 txd_state.TXD_START txd_state.TXD_IDLE 
+txd_state.TXD_IDLE 0 0 0 0 0 0 0 0 0 0 0 0 0 
+txd_state.TXD_START 0 0 0 0 0 0 0 0 0 0 0 1 1 
+txd_state.TXD_DATA0 0 0 0 0 0 0 0 0 0 0 1 0 1 
+txd_state.TXD_DATA1 0 0 0 0 0 0 0 0 0 1 0 0 1 
+txd_state.TXD_DATA2 0 0 0 0 0 0 0 0 1 0 0 0 1 
+txd_state.TXD_DATA3 0 0 0 0 0 0 0 1 0 0 0 0 1 
+txd_state.TXD_DATA4 0 0 0 0 0 0 1 0 0 0 0 0 1 
+txd_state.TXD_DATA5 0 0 0 0 0 1 0 0 0 0 0 0 1 
+txd_state.TXD_DATA6 0 0 0 0 1 0 0 0 0 0 0 0 1 
+txd_state.TXD_DATA7 0 0 0 1 0 0 0 0 0 0 0 0 1 
+txd_state.TXD_STOP1 0 0 1 0 0 0 0 0 0 0 0 0 1 
+txd_state.TXD_STOP2 0 1 0 0 0 0 0 0 0 0 0 0 1 
+txd_state.TXD_STOP3 1 0 0 0 0 0 0 0 0 0 0 0 1 
+
+State Machine - |STORM_SoC_basic|wb_sdram_ctrl:SDRAM_CTRL_0|arbiter:arbiter|wb_port:wbports[0].wb_port|sdram_state
+Name sdram_state.IDLE sdram_state.WRITE sdram_state.READ 
+sdram_state.IDLE 0 0 0 
+sdram_state.READ 1 0 1 
+sdram_state.WRITE 1 1 0 
+
+State Machine - |STORM_SoC_basic|wb_sdram_ctrl:SDRAM_CTRL_0|arbiter:arbiter|wb_port:wbports[0].wb_port|wb_state
+Name wb_state.REFILL wb_state.WRITE wb_state.READ wb_state.IDLE 
+wb_state.IDLE 0 0 0 0 
+wb_state.READ 0 0 1 1 
+wb_state.WRITE 0 1 0 1 
+wb_state.REFILL 1 0 0 1 
+
+State Machine - |STORM_SoC_basic|wb_sdram_ctrl:SDRAM_CTRL_0|sdram_ctrl:sdram_ctrl|next_state
+Name next_state.READ next_state.IDLE next_state.PRE next_state.ACTIVATE 
+next_state.IDLE 0 0 0 0 
+next_state.READ 1 1 0 0 
+next_state.ACTIVATE 0 1 0 1 
+next_state.PRE 0 1 1 0 
+
+State Machine - |STORM_SoC_basic|wb_sdram_ctrl:SDRAM_CTRL_0|sdram_ctrl:sdram_ctrl|state
+Name state.REF state.PRE_ALL state.PRE state.ACTIVATE state.WRITE state.READ state.IDLE state.INIT_PGM_MODE state.INIT_REF state.INIT_PRE state.INIT_POWERUP 
+state.INIT_POWERUP 0 0 0 0 0 0 0 0 0 0 0 
+state.INIT_PRE 0 0 0 0 0 0 0 0 0 1 1 
+state.INIT_REF 0 0 0 0 0 0 0 0 1 0 1 
+state.INIT_PGM_MODE 0 0 0 0 0 0 0 1 0 0 1 
+state.IDLE 0 0 0 0 0 0 1 0 0 0 1 
+state.READ 0 0 0 0 0 1 0 0 0 0 1 
+state.WRITE 0 0 0 0 1 0 0 0 0 0 1 
+state.ACTIVATE 0 0 0 1 0 0 0 0 0 0 1 
+state.PRE 0 0 1 0 0 0 0 0 0 0 1 
+state.PRE_ALL 0 1 0 0 0 0 0 0 0 0 1 
+state.REF 1 0 0 0 0 0 0 0 0 0 1 
+
+State Machine - |STORM_SoC_basic|STORM_TOP:STORM_TOP_INST|BUS_UNIT:BUS_UNIT_INST|ARB_STATE
+Name ARB_STATE.END_TRANSFER ARB_STATE.DOWNLOAD_D_PAGE ARB_STATE.DOWNLOAD_I_PAGE ARB_STATE.IO_REQUEST ARB_STATE.UPLOAD_D_PAGE ARB_STATE.ASSIGN_D_PAGE ARB_STATE.IDLE 
+ARB_STATE.IDLE 0 0 0 0 0 0 0 
+ARB_STATE.ASSIGN_D_PAGE 0 0 0 0 0 1 1 
+ARB_STATE.UPLOAD_D_PAGE 0 0 0 0 1 0 1 
+ARB_STATE.IO_REQUEST 0 0 0 1 0 0 1 
+ARB_STATE.DOWNLOAD_I_PAGE 0 0 1 0 0 0 1 
+ARB_STATE.DOWNLOAD_D_PAGE 0 1 0 0 0 0 1 
+ARB_STATE.END_TRANSFER 1 0 0 0 0 0 1 
+
+State Machine - |STORM_SoC_basic|STORM_TOP:STORM_TOP_INST|CACHE:D_CACHE_INST|ARB_STATE
+Name ARB_STATE.PIPE_RESYNC ARB_STATE.DIRTY_STATE ARB_STATE.IO_PIPE_RESYNC_END ARB_STATE.IO_PIPE_RESYNC ARB_STATE.IO_REQUEST ARB_STATE.MISS_STATE ARB_STATE.STORM_ACCESS 
+ARB_STATE.STORM_ACCESS 0 0 0 0 0 0 0 
+ARB_STATE.MISS_STATE 0 0 0 0 0 1 1 
+ARB_STATE.IO_REQUEST 0 0 0 0 1 0 1 
+ARB_STATE.IO_PIPE_RESYNC 0 0 0 1 0 0 1 
+ARB_STATE.IO_PIPE_RESYNC_END 0 0 1 0 0 0 1 
+ARB_STATE.DIRTY_STATE 0 1 0 0 0 0 1 
+ARB_STATE.PIPE_RESYNC 1 0 0 0 0 0 1 
+
+State Machine - |STORM_SoC_basic|STORM_TOP:STORM_TOP_INST|CACHE:I_CACHE_INST|ARB_STATE
+Name ARB_STATE.PIPE_RESYNC ARB_STATE.DIRTY_STATE ARB_STATE.IO_PIPE_RESYNC_END ARB_STATE.IO_PIPE_RESYNC ARB_STATE.IO_REQUEST ARB_STATE.MISS_STATE ARB_STATE.STORM_ACCESS 
+ARB_STATE.STORM_ACCESS 0 0 0 0 0 0 0 
+ARB_STATE.MISS_STATE 0 0 0 0 0 1 1 
+ARB_STATE.IO_REQUEST 0 0 0 0 1 0 1 
+ARB_STATE.IO_PIPE_RESYNC 0 0 0 1 0 0 1 
+ARB_STATE.IO_PIPE_RESYNC_END 0 0 1 0 0 0 1 
+ARB_STATE.DIRTY_STATE 0 1 0 0 0 0 1 
+ARB_STATE.PIPE_RESYNC 1 0 0 0 0 0 1 
