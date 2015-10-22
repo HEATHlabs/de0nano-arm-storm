@@ -1,5 +1,5 @@
 Fitter report for storm-amber-bootrom
-Sun Oct 04 22:53:40 2015
+Thu Oct 15 21:41:49 2015
 Quartus II 64-Bit Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Web Edition
 
 
@@ -85,7 +85,7 @@ applicable agreement for further details.
 +--------------------------------------------------------------------------------------+
 ; Fitter Summary                                                                       ;
 +------------------------------------+-------------------------------------------------+
-; Fitter Status                      ; Successful - Sun Oct 04 22:53:39 2015           ;
+; Fitter Status                      ; Successful - Thu Oct 15 21:41:48 2015           ;
 ; Quartus II 64-Bit Version          ; 13.0.1 Build 232 06/12/2013 SP 1 SJ Web Edition ;
 ; Revision Name                      ; storm-amber-bootrom                             ;
 ; Top-level Entity Name              ; STORM_SoC_basic                                 ;
@@ -171,12 +171,12 @@ applicable agreement for further details.
 ; Number detected on machine ; 4           ;
 ; Maximum allowed            ; 4           ;
 ;                            ;             ;
-; Average used               ; 1.77        ;
+; Average used               ; 1.73        ;
 ; Maximum used               ; 4           ;
 ;                            ;             ;
 ; Usage by Processor         ; % Time Used ;
 ;     Processor 1            ; 100.0%      ;
-;     Processors 2-4         ;  25.8%      ;
+;     Processors 2-4         ;  24.5%      ;
 +----------------------------+-------------+
 
 
@@ -5584,7 +5584,7 @@ Info (176215): I/O bank details before I/O pin placement
         Info (176213): I/O bank number 7 does not use VREF pins and has 2.5V VCCIO pins. 5 total pin(s) used --  19 pins available
         Info (176213): I/O bank number 8 does not use VREF pins and has undetermined VCCIO pins. 0 total pin(s) used --  24 pins available
 Warning (15064): PLL "system_pll:SYSCON_CLK|altpll:altpll_component|pll" output port clk[1] feeds output pin "SDRAM_CLK_O~output" via non-dedicated routing -- jitter performance depends on switching rate of other design elements. Use PLL dedicated clock outputs to ensure jitter performance
-Info (171121): Fitter preparation operations ending: elapsed time is 00:00:21
+Info (171121): Fitter preparation operations ending: elapsed time is 00:00:20
 Info (170189): Fitter placement preparation operations beginning
 Info (170190): Fitter placement preparation operations ending: elapsed time is 00:00:09
 Info (170191): Fitter placement operations beginning
@@ -5597,7 +5597,7 @@ Info (170194): Fitter routing operations ending: elapsed time is 00:00:17
 Info (170199): The Fitter performed an Auto Fit compilation.  Optimizations were skipped to reduce compilation time.
     Info (170201): Optimizations that may affect the design's routability were skipped
     Info (170200): Optimizations that may affect the design's timing were skipped
-Info (11888): Total time spent on timing analysis during the Fitter is 7.46 seconds.
+Info (11888): Total time spent on timing analysis during the Fitter is 7.55 seconds.
 Info (334003): Started post-fitting delay annotation
 Info (334004): Delay annotation completed successfully
 Info (334003): Started post-fitting delay annotation
@@ -5605,10 +5605,10 @@ Info (334004): Delay annotation completed successfully
 Info (11218): Fitter post-fit operations ending: elapsed time is 00:00:14
 Info (144001): Generated suppressed messages file D:/arm-storm-sdram2/storm-amber-bootrom.fit.smsg
 Info: Quartus II 64-Bit Fitter was successful. 0 errors, 15 warnings
-    Info: Peak virtual memory: 1367 megabytes
-    Info: Processing ended: Sun Oct 04 22:53:47 2015
-    Info: Elapsed time: 00:01:42
-    Info: Total CPU time (on all processors): 00:02:21
+    Info: Peak virtual memory: 1362 megabytes
+    Info: Processing ended: Thu Oct 15 21:41:56 2015
+    Info: Elapsed time: 00:01:43
+    Info: Total CPU time (on all processors): 00:02:22
 
 
 +----------------------------+

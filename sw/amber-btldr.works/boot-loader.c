@@ -40,6 +40,7 @@
 // from http://www.opencores.org/lgpl.shtml                     //
 //                                                              //
 ----------------------------------------------------------------*/
+#define DEBUG1 //gethex() debug
 
 #include "../include/amber_registers.h"
 #include "../mini-libc/stdio.h"
@@ -382,21 +383,49 @@ int get_hex ( char * buf, int start_position,
 {
                        
     int cpos = 0, done = 0;
+#ifdef DEBUG1
+printf("%s \n", buf);
+printf("addr %x \n", address);
+#endif
 
     cpos = start_position; done = 0; *address = 0;
 
     while (done == 0) {    
-        if ( buf[cpos] >= '0' && buf[cpos] <= '9' ) {
-           *address = *address<<4;
-           *address = *address + buf[cpos] - '0';
+#ifdef DEBUG1
+printf("char: %c ", buf[cpos]);
+#endif 
+		if ( buf[cpos] >= '0' && buf[cpos] <= '9' ) {
+#ifdef DEBUG1
+printf("0 thru 9 ");
+#endif            
+			*address = *address<<4;
+			*address = *address + buf[cpos] - '0';
            }
         else if ( buf[cpos] >= 'A' && buf[cpos] <= 'F' ) {
-            *address = *address<<4;
-            *address = *address + buf[cpos] - 'A' + 10;
+#ifdef DEBUG1
+printf("A thru F ");
+#endif            
+			*address = *address<<4;
+#ifdef DEBUG1
+printf("shift addr ");
+#endif 			            
+			*address = *address + buf[cpos] - (int)'A' + 10;
+#ifdef DEBUG1
+printf("incr addr ");
+#endif 			            
            }
         else if ( buf[cpos] >= 'a' && buf[cpos] <= 'f' ) {
-            *address = *address<<4;
-            *address = *address + buf[cpos] - 'a' + 10;
+ #ifdef DEBUG1
+printf("a thru f ");
+#endif  
+           *address = *address<<4;
+#ifdef DEBUG1
+printf("shift address ");
+#endif 		
+            *address = *address + buf[cpos] - (int)'a' + 10;
+#ifdef DEBUG1
+printf("incr addr ");
+#endif 			            
            }
         else  {
             done = 1;
@@ -407,8 +436,15 @@ int get_hex ( char * buf, int start_position,
             *length = 8;
             }
         cpos++;
+#ifdef DEBUG1
+printf("cpos:%x ", cpos);
+printf("addr:%x\n", *address);
+#endif
         }
-            
+ #ifdef DEBUG1
+printf("%i ", *length);
+#endif
+           
     /* Return the length of the hexadecimal string */
     if (cpos > start_position+1) return 1; else return 0;
 }

@@ -43,10 +43,10 @@
 
 `define MARSOHOD2
 
-module boot_mem32 #(
+module sram_mem32 #(
 parameter WB_DWIDTH   = 32,
 parameter WB_SWIDTH   = 4,
-parameter MADDR_WIDTH = 12
+parameter MADDR_WIDTH = 15
 )(
 input                       i_wb_clk,     // WISHBONE clock
 

@@ -369,31 +369,56 @@ architecture Structure of STORM_SoC_basic is
 					);
 		end component;
 
-	-- Internal Working Memory --------------------------------------------------------
+		
+	-- AMBER Internal Working Memory --------------------------------------------------------
 	-- -----------------------------------------------------------------------------------
-		component MEMORY
-			generic	(
-						MEM_SIZE      : natural := 256;  -- memory cells
-						LOG2_MEM_SIZE : natural := 8;    -- log2(memory cells)
-						OUTPUT_GATE   : boolean := FALSE -- output and-gate, might be necessary for some bus systems
-					);
+		component sram_mem32
 			port	(
 						-- Wishbone Bus --
-						WB_CLK_I      : in  STD_LOGIC; -- memory master clock
-						WB_RST_I      : in  STD_LOGIC; -- high active sync reset
-						WB_CTI_I      : in  STD_LOGIC_VECTOR(02 downto 0); -- cycle indentifier
-						WB_TGC_I      : in  STD_LOGIC_VECTOR(06 downto 0); -- cycle tag
-						WB_ADR_I      : in  STD_LOGIC_VECTOR(LOG2_MEM_SIZE-1 downto 0); -- adr in
-						WB_DATA_I     : in  STD_LOGIC_VECTOR(31 downto 0); -- write data
-						WB_DATA_O     : out STD_LOGIC_VECTOR(31 downto 0); -- read data
-						WB_SEL_I      : in  STD_LOGIC_VECTOR(03 downto 0); -- data quantity
-						WB_WE_I       : in  STD_LOGIC; -- write enable
-						WB_STB_I      : in  STD_LOGIC; -- valid cycle
-						WB_ACK_O      : out STD_LOGIC; -- acknowledge
-						WB_HALT_O     : out STD_LOGIC; -- throttle master
-						WB_ERR_O      : out STD_LOGIC  -- abnormal cycle termination
+						i_wb_clk      : in  STD_LOGIC; -- memory master clock
+--						WB_RST_I      : in  STD_LOGIC; -- high active sync reset
+--						WB_CTI_I      : in  STD_LOGIC_VECTOR(02 downto 0); -- cycle indentifier
+--						WB_TGC_I      : in  STD_LOGIC_VECTOR(06 downto 0); -- cycle tag
+						i_wb_adr      : in  STD_LOGIC_VECTOR(31 downto 0); -- adr in
+						i_wb_dat     : in  STD_LOGIC_VECTOR(31 downto 0); -- write data
+						o_wb_dat     : out STD_LOGIC_VECTOR(31 downto 0); -- read data
+						i_wb_sel      : in  STD_LOGIC_VECTOR(03 downto 0); -- data quantity
+						i_wb_we       : in  STD_LOGIC; -- write enable
+						i_wb_stb      : in  STD_LOGIC; -- valid cycle
+						o_wb_ack      : out STD_LOGIC; -- acknowledge
+--						WB_HALT_O     : out STD_LOGIC; -- throttle master
+						i_wb_cyc     : in  STD_LOGIC; -- valid cycle
+						o_wb_err      : out STD_LOGIC  -- abnormal cycle termination
+						
 					);
 		end component;
+
+		
+	-- Internal Working Memory --------------------------------------------------------
+	-- -----------------------------------------------------------------------------------
+--		component MEMORY
+--			generic	(
+--						MEM_SIZE      : natural := 256;  -- memory cells
+--						LOG2_MEM_SIZE : natural := 8;    -- log2(memory cells)
+--						OUTPUT_GATE   : boolean := FALSE -- output and-gate, might be necessary for some bus systems
+--					);
+--			port	(
+--						-- Wishbone Bus --
+--						WB_CLK_I      : in  STD_LOGIC; -- memory master clock
+--						WB_RST_I      : in  STD_LOGIC; -- high active sync reset
+--						WB_CTI_I      : in  STD_LOGIC_VECTOR(02 downto 0); -- cycle indentifier
+--						WB_TGC_I      : in  STD_LOGIC_VECTOR(06 downto 0); -- cycle tag
+--						WB_ADR_I      : in  STD_LOGIC_VECTOR(LOG2_MEM_SIZE-1 downto 0); -- adr in
+--						WB_DATA_I     : in  STD_LOGIC_VECTOR(31 downto 0); -- write data
+--						WB_DATA_O     : out STD_LOGIC_VECTOR(31 downto 0); -- read data
+--						WB_SEL_I      : in  STD_LOGIC_VECTOR(03 downto 0); -- data quantity
+--						WB_WE_I       : in  STD_LOGIC; -- write enable
+--						WB_STB_I      : in  STD_LOGIC; -- valid cycle
+--						WB_ACK_O      : out STD_LOGIC; -- acknowledge
+--						WB_HALT_O     : out STD_LOGIC; -- throttle master
+--						WB_ERR_O      : out STD_LOGIC  -- abnormal cycle termination
+--					);
+--		end component;
 	--------------------------------------------------------------------------------------
 	----SDRAM Controller
 	--------------------------------------------------------------------------------------
@@ -944,29 +969,53 @@ begin
 -- ###  SYSTEM COMPONENTS                                                                                                        ###
 -- #################################################################################################################################
 
+
 	-- Internal Working Memory -----------------------------------------------------------------------------
 	-- --------------------------------------------------------------------------------------------------------
-		INTERNAL_SRAM_MEMORY: MEMORY
-			generic map	(
-						MEM_SIZE      => INT_MEM_SIZE_C/4,       -- memory size in 32-bit cells
-						LOG2_MEM_SIZE => log2(INT_MEM_SIZE_C/4), -- log2 memory size in 32-bit cells
-						OUTPUT_GATE   => USE_OUTPUT_GATES_C      -- output and-gate, might be necessary for some bus systems
-						)
+		INTERNAL_SRAM_MEMORY: sram_mem32
 			port map (
-						WB_CLK_I      => MAIN_CLK,
-						WB_RST_I      => MAIN_RST,
-						WB_CTI_I      => CORE_WB_CTI_O,
-						WB_TGC_I      => CORE_WB_TGC_O,
-						WB_ADR_I      => CORE_WB_ADR_O(log2(INT_MEM_SIZE_C/4)+1 downto 2), -- word boundary access
-						WB_DATA_I     => CORE_WB_DATA_O,
-						WB_DATA_O     => INT_MEM_DATA_O,
-						WB_SEL_I      => CORE_WB_SEL_O,
-						WB_WE_I       => CORE_WB_WE_O,
-						WB_STB_I      => INT_MEM_STB_I,
-						WB_ACK_O      => INT_MEM_ACK_O,
-						WB_HALT_O     => INT_MEM_HALT_O,
-						WB_ERR_O      => INT_MEM_ERR_O
+						i_wb_clk      => MAIN_CLK,
+--						WB_RST_I      => MAIN_RST,
+--						WB_CTI_I      => CORE_WB_CTI_O,
+--						WB_TGC_I      => CORE_WB_TGC_O,
+						i_wb_adr      => CORE_WB_ADR_O,
+						i_wb_dat     => CORE_WB_DATA_O,
+						o_wb_dat     => INT_MEM_DATA_O,
+						i_wb_sel      => CORE_WB_SEL_O,
+						i_wb_we       => CORE_WB_WE_O,
+						i_wb_stb      => INT_MEM_STB_I,
+						o_wb_ack      => INT_MEM_ACK_O,
+--						WB_HALT_O     => INT_MEM_HALT_O,
+						i_wb_cyc      => CORE_WB_CYC_O,
+						o_wb_err      => INT_MEM_ERR_O
 					);
+
+		INT_MEM_HALT_O <= '0';-- nothing can go wrong - never ever!
+
+
+	-- Internal Working Memory -----------------------------------------------------------------------------
+	-- --------------------------------------------------------------------------------------------------------
+--		INTERNAL_SRAM_MEMORY: MEMORY
+--			generic map	(
+--						MEM_SIZE      => INT_MEM_SIZE_C/4,       -- memory size in 32-bit cells
+--						LOG2_MEM_SIZE => log2(INT_MEM_SIZE_C/4), -- log2 memory size in 32-bit cells
+--						OUTPUT_GATE   => USE_OUTPUT_GATES_C      -- output and-gate, might be necessary for some bus systems
+--						)
+--			port map (
+--						WB_CLK_I      => MAIN_CLK,
+--						WB_RST_I      => MAIN_RST,
+--						WB_CTI_I      => CORE_WB_CTI_O,
+--						WB_TGC_I      => CORE_WB_TGC_O,
+--						WB_ADR_I      => CORE_WB_ADR_O(log2(INT_MEM_SIZE_C/4)+1 downto 2), -- word boundary access
+--						WB_DATA_I     => CORE_WB_DATA_O,
+--						WB_DATA_O     => INT_MEM_DATA_O,
+--						WB_SEL_I      => CORE_WB_SEL_O,
+--						WB_WE_I       => CORE_WB_WE_O,
+--						WB_STB_I      => INT_MEM_STB_I,
+--						WB_ACK_O      => INT_MEM_ACK_O,
+--						WB_HALT_O     => INT_MEM_HALT_O,
+--						WB_ERR_O      => INT_MEM_ERR_O
+--					);
 	-- Boot ROM Memory -------------------------------------------------------------------------------------
 	-- --------------------------------------------------------------------------------------------------------
 		BOOT_MEMORY: BOOT_ROM_FILE

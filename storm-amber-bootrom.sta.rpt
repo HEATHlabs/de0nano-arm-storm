@@ -1,5 +1,5 @@
 TimeQuest Timing Analyzer report for storm-amber-bootrom
-Sun Oct 04 22:54:11 2015
+Thu Oct 15 21:42:21 2015
 Quartus II 64-Bit Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Web Edition
 
 
@@ -127,12 +127,13 @@ applicable agreement for further details.
 ; Number detected on machine ; 4           ;
 ; Maximum allowed            ; 4           ;
 ;                            ;             ;
-; Average used               ; 1.21        ;
+; Average used               ; 1.38        ;
 ; Maximum used               ; 4           ;
 ;                            ;             ;
 ; Usage by Processor         ; % Time Used ;
 ;     Processor 1            ; 100.0%      ;
-;     Processors 2-4         ;   7.1%      ;
+;     Processor 2            ;  23.1%      ;
+;     Processors 3-4         ;   7.7%      ;
 +----------------------------+-------------+
 
 
@@ -2672,7 +2673,7 @@ No dedicated SERDES Receiver circuitry present in device or used in design
 Info: *******************************************************************
 Info: Running Quartus II 64-Bit TimeQuest Timing Analyzer
     Info: Version 13.0.1 Build 232 06/12/2013 Service Pack 1 SJ Web Edition
-    Info: Processing started: Sun Oct 04 22:53:54 2015
+    Info: Processing started: Thu Oct 15 21:42:05 2015
 Info: Command: quartus_sta storm_sdram -c storm-amber-bootrom
 Info: qsta_default_script.tcl version: #1
 Info (20030): Parallel compilation is enabled and will use 4 of the 4 processors detected
@@ -2782,8 +2783,8 @@ Info (332146): Worst-case minimum pulse width slack is 49.464
 Info (332102): Design is not fully constrained for setup requirements
 Info (332102): Design is not fully constrained for hold requirements
 Info: Quartus II 64-Bit TimeQuest Timing Analyzer was successful. 0 errors, 31 warnings
-    Info: Peak virtual memory: 719 megabytes
-    Info: Processing ended: Sun Oct 04 22:54:10 2015
+    Info: Peak virtual memory: 721 megabytes
+    Info: Processing ended: Thu Oct 15 21:42:21 2015
     Info: Elapsed time: 00:00:16
     Info: Total CPU time (on all processors): 00:00:17
 

@@ -16,7 +16,7 @@
 component my_sram_4096_32_byte_en
 	PORT
 	(
-		address		: IN STD_LOGIC_VECTOR (11 DOWNTO 0);
+		address		: IN STD_LOGIC_VECTOR (12 DOWNTO 0);
 		byteena		: IN STD_LOGIC_VECTOR (3 DOWNTO 0) :=  (OTHERS => '1');
 		clock		: IN STD_LOGIC  := '1';
 		data		: IN STD_LOGIC_VECTOR (31 DOWNTO 0);

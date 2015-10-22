@@ -37,7 +37,7 @@
 #  from http://www.opencores.org/lgpl.shtml                     //
 #                                                               //
 # ----------------------------------------------------------------
-#arm-elf-objdump -D boot-loader.elf > boot-loader.lss2
+#arm-elf-objdump -h -D boot-loader.elf > boot-loader.lss2
 
 
 #MIN_SIZE = 1
