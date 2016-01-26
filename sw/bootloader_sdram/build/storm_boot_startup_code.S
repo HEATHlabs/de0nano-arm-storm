@@ -85,6 +85,22 @@ _mainCRTStartup:
         .size   _start, . - _start
         .endfunc
 
+/*		.globl _jump_to_program */
+	.global _jump_to_program
+	.func   _jump_to_program
+_jump_to_program:
+ 
+        @ ----------------------------------------------
+        @ jump to start of program in svc mode with interrupts disabled
+        @ ----------------------------------------------
+        mov     r4, r0
+      @  orr     r4, #0x0c000003
+        mov     r0, #0  
+        mov     pc, r4
+    .endfunc
+		
+		
+		
         .global _reset, reset, exit, abort
         .func   _reset
 _reset:

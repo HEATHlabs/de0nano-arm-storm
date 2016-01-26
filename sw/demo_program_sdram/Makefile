@@ -29,7 +29,7 @@
 #
 
 # MCU name and submodel
-MCU = arm7tdmi
+MCU = arm7
 SUBMDL = STORMcore
 
 

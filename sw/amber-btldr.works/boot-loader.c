@@ -211,7 +211,8 @@ void parse ( char * buf )
 
             case 'r': /* Read address */
                 /* Recover the address from the string - the address is written in hex */      
-                if (get_hex ( buf, 2, &address, &length )) { 
+                printf("before gethex addr %x \n", &address);
+				if (get_hex ( buf, 2, &address, &length )) { 
                     printm (address);
                     }
                 break;
@@ -383,50 +384,61 @@ int get_hex ( char * buf, int start_position,
 {
                        
     int cpos = 0, done = 0;
+	unsigned long int hexval =  0 ;
 #ifdef DEBUG1
 printf("%s \n", buf);
 printf("addr %x \n", address);
 #endif
 
     cpos = start_position; done = 0; *address = 0;
-
+	
     while (done == 0) {    
-#ifdef DEBUG1
-printf("char: %c ", buf[cpos]);
-#endif 
-		if ( buf[cpos] >= '0' && buf[cpos] <= '9' ) {
-#ifdef DEBUG1
-printf("0 thru 9 ");
-#endif            
-			*address = *address<<4;
-			*address = *address + buf[cpos] - '0';
-           }
-        else if ( buf[cpos] >= 'A' && buf[cpos] <= 'F' ) {
-#ifdef DEBUG1
-printf("A thru F ");
-#endif            
-			*address = *address<<4;
-#ifdef DEBUG1
-printf("shift addr ");
-#endif 			            
-			*address = *address + buf[cpos] - (int)'A' + 10;
-#ifdef DEBUG1
-printf("incr addr ");
-#endif 			            
-           }
-        else if ( buf[cpos] >= 'a' && buf[cpos] <= 'f' ) {
- #ifdef DEBUG1
-printf("a thru f ");
-#endif  
-           *address = *address<<4;
-#ifdef DEBUG1
-printf("shift address ");
-#endif 		
-            *address = *address + buf[cpos] - (int)'a' + 10;
-#ifdef DEBUG1
-printf("incr addr ");
-#endif 			            
-           }
+	
+	//for (i=0 ; i< (charlen*2) ; i++ ) {
+		if (( buf[cpos] >= 48 ) & (buf[cpos] <= 57 )) 
+			hexval = (hexval <<4 ) + buf[cpos] - (int) '0';
+		else if (( buf[cpos] >= 65 ) & ( buf[cpos] <= 70 )) 
+			hexval = (hexval <<4 ) + buf[cpos] + 10 - (int) 'A';
+		else if (( buf[cpos] >= 97 ) & ( buf[cpos] <= 102)) 
+			hexval = (hexval <<4 ) + buf[cpos] +10 - (int) 'a';
+	//} //for
+	
+// #ifdef DEBUG1
+// printf("char: %c ", buf[cpos]);
+// #endif 
+		// if ( buf[cpos] >= '0' && buf[cpos] <= '9' ) {
+// #ifdef DEBUG1
+// printf("0 thru 9 ");
+// #endif            
+			// *address = *address<<4;
+			// *address = *address + buf[cpos] - '0';
+           // }
+        // else if ( buf[cpos] >= 'A' && buf[cpos] <= 'F' ) {
+// #ifdef DEBUG1
+// printf("A thru F ");
+// #endif            
+			// *address = *address<<4;
+// #ifdef DEBUG1
+// printf("shift addr ");
+// #endif 			            
+			// *address = *address + buf[cpos] - (int)'A' + 10;
+// #ifdef DEBUG1
+// printf("incr addr ");
+// #endif 			            
+           // }
+        // else if ( buf[cpos] >= 'a' && buf[cpos] <= 'f' ) {
+ // #ifdef DEBUG1
+// printf("a thru f ");
+// #endif  
+           // *address = *address<<4;
+// #ifdef DEBUG1
+// printf("shift address ");
+// #endif 		
+            // *address = *address + buf[cpos] - (int)'a' + 10;
+// #ifdef DEBUG1
+// printf("incr addr ");
+// #endif 			            
+          // }
         else  {
             done = 1;
             *length = cpos - start_position;
@@ -438,13 +450,13 @@ printf("incr addr ");
         cpos++;
 #ifdef DEBUG1
 printf("cpos:%x ", cpos);
-printf("addr:%x\n", *address);
+printf("addr:%x\n", hexval);
 #endif
         }
  #ifdef DEBUG1
-printf("%i ", *length);
+printf("len %i \n", *length);
 #endif
-           
+     *address = hexval;
     /* Return the length of the hexadecimal string */
     if (cpos > start_position+1) return 1; else return 0;
 }

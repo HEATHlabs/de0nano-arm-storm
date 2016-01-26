@@ -16,99 +16,99 @@ Linker script and memory map
                 0x00002000                STACK_SIZE = 0x2000
 TARGET(elf32-bigarm)
 
-.text           0x00010000     0x21b0
+.text           0x00010000     0x210c
  start*(.text)
  .text          0x00010000      0x1a4 start.o
                 0x000100b0                _core_status
                 0x00010068                _jump_to_program
                 0x00010000                start
  *(.text)
- .text          0x000101a4      0x884 boot-loader.o
-                0x0001035c                get_address_data
+ .text          0x000101a4      0x814 boot-loader.o
+                0x000102d8                get_address_data
                 0x000101a4                get_hex
-                0x000103b0                print_spaces
-                0x000103d4                print_help
-                0x00010508                load_run
-                0x000104f4                printm
-                0x00010890                main
-                0x00010640                parse
- .text          0x00010a28       0x5c crc16.o
-                0x00010a28                crc16_ccitt
- .text          0x00010a84      0x2ac xmodem.o
-                0x00010a9c                xmodemReceive
- .text          0x00010d30      0x158 elfsplitter.o
-                0x00010d30                elfsplitter
- .text          0x00010e88      0x43c ../mini-libc/printf.o
-                0x000110ac                print
-                0x00011258                printf
-                0x00010f70                printi
-                0x00010eac                prints
-                0x00010e88                outbyte
-                0x00011290                sprintf
- .text          0x000112c4      0x480 ../mini-libc/libc_asm.o
-                0x000113b4                strcpy
-                0x000116bc                malloc
-                0x000112e0                _outbyte
-                0x00011330                __aeabi_idiv
-                0x000116f4                strncmp
-                0x000116d0                strncpy
-                0x00011300                _inbyte
-                0x000114b8                strcmp
-                0x000112d0                _testpass
-                0x000116b0                init_malloc
-                0x00011330                _div
-                0x000112c4                _testfail
- .text          0x00011744      0x53c ../mini-libc/memcpy.o
-                0x00011744                memcpy
+                0x0001032c                print_spaces
+                0x00010350                print_help
+                0x00010484                load_run
+                0x00010470                printm
+                0x00010820                main
+                0x000105bc                parse
+ .text          0x000109b8       0x5c crc16.o
+                0x000109b8                crc16_ccitt
+ .text          0x00010a14      0x2ac xmodem.o
+                0x00010a2c                xmodemReceive
+ .text          0x00010cc0      0x158 elfsplitter.o
+                0x00010cc0                elfsplitter
+ .text          0x00010e18      0x43c ../mini-libc/printf.o
+                0x0001103c                print
+                0x000111e8                printf
+                0x00010f00                printi
+                0x00010e3c                prints
+                0x00010e18                outbyte
+                0x00011220                sprintf
+ .text          0x00011254      0x480 ../mini-libc/libc_asm.o
+                0x00011344                strcpy
+                0x0001164c                malloc
+                0x00011270                _outbyte
+                0x000112c0                __aeabi_idiv
+                0x00011684                strncmp
+                0x00011660                strncpy
+                0x00011290                _inbyte
+                0x00011448                strcmp
+                0x00011260                _testpass
+                0x00011640                init_malloc
+                0x000112c0                _div
+                0x00011254                _testfail
+ .text          0x000116d4      0x53c ../mini-libc/memcpy.o
+                0x000116d4                memcpy
  *(.rodata)
- .rodata        0x00011c80      0x200 crc16.o
+ .rodata        0x00011c10      0x200 crc16.o
  *(.rodata*)
  .rodata.str1.4
-                0x00011e80      0x2cf boot-loader.o
-                                0x2d8 (size before relaxing)
- *fill*         0x0001214f        0x1 00
+                0x00011e10      0x29b boot-loader.o
+                                0x2a0 (size before relaxing)
+ *fill*         0x000120ab        0x1 00
  .rodata.str1.4
-                0x00012150       0x57 elfsplitter.o
+                0x000120ac       0x57 elfsplitter.o
                                  0x58 (size before relaxing)
- *fill*         0x000121a7        0x1 00
+ *fill*         0x00012103        0x1 00
  .rodata.str1.4
-                0x000121a8        0x8 ../mini-libc/printf.o
+                0x00012104        0x8 ../mini-libc/printf.o
  *(.glue_7)
- .glue_7        0x000121b0        0x0 boot-loader.o
- .glue_7        0x000121b0        0x0 start.o
- .glue_7        0x000121b0        0x0 crc16.o
- .glue_7        0x000121b0        0x0 xmodem.o
- .glue_7        0x000121b0        0x0 elfsplitter.o
- .glue_7        0x000121b0        0x0 ../mini-libc/printf.o
- .glue_7        0x000121b0        0x0 ../mini-libc/libc_asm.o
- .glue_7        0x000121b0        0x0 ../mini-libc/memcpy.o
+ .glue_7        0x0001210c        0x0 boot-loader.o
+ .glue_7        0x0001210c        0x0 start.o
+ .glue_7        0x0001210c        0x0 crc16.o
+ .glue_7        0x0001210c        0x0 xmodem.o
+ .glue_7        0x0001210c        0x0 elfsplitter.o
+ .glue_7        0x0001210c        0x0 ../mini-libc/printf.o
+ .glue_7        0x0001210c        0x0 ../mini-libc/libc_asm.o
+ .glue_7        0x0001210c        0x0 ../mini-libc/memcpy.o
  *(.glue_7t)
- .glue_7t       0x000121b0        0x0 boot-loader.o
- .glue_7t       0x000121b0        0x0 start.o
- .glue_7t       0x000121b0        0x0 crc16.o
- .glue_7t       0x000121b0        0x0 xmodem.o
- .glue_7t       0x000121b0        0x0 elfsplitter.o
- .glue_7t       0x000121b0        0x0 ../mini-libc/printf.o
- .glue_7t       0x000121b0        0x0 ../mini-libc/libc_asm.o
- .glue_7t       0x000121b0        0x0 ../mini-libc/memcpy.o
-                0x000121b0                . = ALIGN (0x4)
+ .glue_7t       0x0001210c        0x0 boot-loader.o
+ .glue_7t       0x0001210c        0x0 start.o
+ .glue_7t       0x0001210c        0x0 crc16.o
+ .glue_7t       0x0001210c        0x0 xmodem.o
+ .glue_7t       0x0001210c        0x0 elfsplitter.o
+ .glue_7t       0x0001210c        0x0 ../mini-libc/printf.o
+ .glue_7t       0x0001210c        0x0 ../mini-libc/libc_asm.o
+ .glue_7t       0x0001210c        0x0 ../mini-libc/memcpy.o
+                0x0001210c                . = ALIGN (0x4)
 
-.ctors          0x000121b0        0x0
-                0x000121b0                PROVIDE (__ctors_start__, .)
+.ctors          0x0001210c        0x0
+                0x0001210c                PROVIDE (__ctors_start__, .)
  *(SORT(.ctors.*))
  *(.ctors)
-                0x000121b0                PROVIDE (__ctors_end__, .)
+                0x0001210c                PROVIDE (__ctors_end__, .)
 
-.dtors          0x000121b0        0x0
-                0x000121b0                PROVIDE (__dtors_start__, .)
+.dtors          0x0001210c        0x0
+                0x0001210c                PROVIDE (__dtors_start__, .)
  *(SORT(.dtors.*))
  *(.dtors)
-                0x000121b0                PROVIDE (__dtors_end__, .)
-                0x000121b0                . = ALIGN (0x4)
-                0x000121b0                _etext = .
-                0x000121b0                PROVIDE (etext, .)
+                0x0001210c                PROVIDE (__dtors_end__, .)
+                0x0001210c                . = ALIGN (0x4)
+                0x0001210c                _etext = .
+                0x0001210c                PROVIDE (etext, .)
 
-.data           0x00000000        0x0 load address 0x000121b0
+.data           0x00000000        0x0 load address 0x0001210c
                 0x00000000                _data = .
  *(.data)
  .data          0x00000000        0x0 boot-loader.o

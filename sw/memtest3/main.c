@@ -17,10 +17,13 @@
 #include "memtest.h"
 #include "memtest.c"
 
-#define BASE_ADDRESS  (volatile datum *) 0x01000000 //beginning of SDRAM memory
-#define NUM_BYTES     ( 32 * 1024 * 1024 ) - 0x00000000
+#define BASE_ADDRESS  (volatile datum *) 0x02000000 //beginning of SDRAM memory
+//#define NUM_BYTES     ( 32 * 1024 * 1024 ) - 0x00000000
+//#define BASE_ADDRESS  (volatile datum *) 0x00004000 //beginning of SDRAM memory
 //#define NUM_BYTES     ( 32 * 1024 )
-#define CYCLES	100
+//#define NUM_BYTES     ( 32 * 1024 )
+#define NUM_BYTES     1024
+#define CYCLES	5
 
 // ############################################################################################
 // Convert 4/8/12/16/20/24/28/32 bit hexadecimal value to ASCII string
@@ -73,7 +76,7 @@ main(void)
      uart0_printf("BASE ADDRESS:  ");
      long_to_hex_string((unsigned long ) BASE_ADDRESS, str, 8);
      uart0_printf(str);uart0_printf("\r\n");
-     uart0_printf("Number of Bytest:  ");
+     uart0_printf("Number of Bytes:  ");
      long_to_hex_string((unsigned long ) NUM_BYTES, str, 8);
      uart0_printf(str);uart0_printf("\r\n");
   for (i=1; i<=CYCLES; i++) {	
@@ -132,8 +135,3 @@ main(void)
    } //for
 	asm volatile ("mov pc, #00010000");
 }   /* memTest() */
-
-
-
-
-

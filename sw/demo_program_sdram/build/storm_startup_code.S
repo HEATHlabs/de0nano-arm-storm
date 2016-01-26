@@ -160,9 +160,13 @@ _mainCRTStartup:
         mov   r2,r0
         mov   fp,r0                     // null frame pointer
         mov   r7,r0                     // null frame pointer for thumb
+ //       ldr   r10,=main
+//        mov   lr,pc
+ //       b    r10                       // enter main()
+//        bx    r10                       // enter main()
         ldr   r10,=main
         mov   lr,pc
-        bx    r10                       // enter main()
+        mov   pc, r10                   // enter main()
 
         .size   _start, . - _start
         .endfunc

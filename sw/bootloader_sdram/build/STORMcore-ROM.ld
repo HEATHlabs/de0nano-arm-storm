@@ -4,14 +4,13 @@
 /*                                                                     */
 /***********************************************************************/
 ENTRY(_boot)
-STACK_SIZE = 0x4000; /* 16KB */
+STACK_SIZE = 0x2000;
 
 /* Memory Definitions */
 MEMORY
 {
-  ROM (rx) : ORIGIN = 0xFFF00000, LENGTH = 0x00002000
-  RAM (rwx) : ORIGIN = 0x00000000, LENGTH = 0x00008000
-  RAM (rwx) : ORIGIN = 0x04000000, LENGTH = 0x02000000 /*len = 32MB */
+  ROM (rx) : ORIGIN = 0x00010000, LENGTH = 0x00004000
+  RAM (rw) : ORIGIN = 0x00000000, LENGTH = 0x00008000
 }
 
 /* Section Definitions */

@@ -1,19 +1,11 @@
-	//  0x00000000	0x00007FFF	Internal SRAM
-	//  0x04000000	0x05FFFFFF	External SDRAM
-	//  0xFFF00000	0xFFF01FFF	Internal ROM
-
-
-
-#define SDR_START_ADDRESS 0x04000000
-#define SDR_TEST_ADDR_OFFSET 16777216
-#define SDR_SIZE 33554432
-#define XRAM_SIZE SDR_SIZE
 #include "../lib/storm_core.h"
 #include "../lib/storm_soc_basic.h"
 #include "../lib/io_driver.c"
 #include "../lib/uart.c"
 #include "../lib/utilities.c"
-#include <stdlib.h>
+
+//#define JUMPADDRESS 0x00000000
+#define JUMPADDRESS 0x01000000
 
 unsigned long int hex_string_to_long ( char *hexstr, int charlen )
 {
@@ -45,6 +37,15 @@ unsigned long int qbytes_to_long ( unsigned char *buffer )
 	return n;
 }
 
+void print_intro(){
+
+	// Console menu
+	uart0_printf(" 0 - boot from core RAM (start application)\r\n 1 - program core RAM via UART_0\r\n 2 - core RAM dump\r\n");
+	uart0_printf(" 3 - boot from I2C EEPROM\r\n 4 - program I2C EEPROM via UART_0\r\n 5 - show content of I2C EEPROM\r\n");
+	uart0_printf(" a - automatic boot configuration\r\n h - help\r\n r - restart system\r\n\r\nSelect: ");
+}
+
+
 // ############################################################################################
 // STORM SoC Bootloader
    int main(void)
@@ -52,7 +53,7 @@ unsigned long int qbytes_to_long ( unsigned char *buffer )
 {
 	int function_sel, data, i, start_app = 0;
 	unsigned long *data_pointer, word_buffer, adr_buffer, cnt;
-	unsigned char buffer[5], char_tmp, *char_pointer, device_id;
+	unsigned char buffer[5], temp_string[9], char_tmp, *char_pointer, device_id;
 
 	// show reset ack
 	io_set_gpio0_port(0);
@@ -73,21 +74,21 @@ unsigned long int qbytes_to_long ( unsigned char *buffer )
 	}
 
 	// Intro screen
-	uart0_printf("\r\n\r\n\r\n+----------------------------------------------------------------+\r\n");
+		uart0_printf("\r\n\r\n\r\n+----------------------------------------------------------------+\r\n");
 	uart0_printf(            "|    <<< STORM Core Processor System - By Stephan Nolting >>>    |\r\n");
 	uart0_printf(            "+----------------------------------------------------------------+\r\n");
-	uart0_printf(            "|         Bootloader for STORM SoC   Version: J_SDRAM            |\r\n");
+	uart0_printf(            "|         Bootloader for STORM SoC   Version: 20120524-D         |\r\n");
 	uart0_printf(            "|               Contact: stnolting@googlemail.com                |\r\n");
 	uart0_printf(            "+----------------------------------------------------------------+\r\n\r\n");
 
 	uart0_printf(            " < Welcome to the STORM SoC bootloader console! >\r\n < Select an operation from the menu below or press >\r\n");
 	uart0_printf(            " < the boot key for immediate application start. >\r\n\r\n");
-
-	// Console menu
-	uart0_printf(" 0 - boot from  SDRAM (start application)\r\n 1 - program  SDRAM via UART_0\r\n 2 -  SDRAM dump\r\n");
-	uart0_printf(" 3 - boot from I2C EEPROM\r\n 4 - program I2C EEPROM via UART_0\r\n 5 - show content of I2C EEPROM\r\n");
-	uart0_printf(" a - automatic boot configuration\r\n h - help\r\n r - restart system\r\n\r\nSelect: ");
-
+	uart0_printf(" Load Address: ");
+	long_to_hex_string(JUMPADDRESS, temp_string, 8);
+	uart0_printf(temp_string);
+	uart0_printf("\n\r");
+	print_intro();
+	
 	while(1){
 
 		// console input
@@ -119,25 +120,22 @@ main_menu:
 				uart0_printf("\r\n\r\nApplication will start automatically after download.\r\n-> Waiting for 'storm_program.bin' in byte-stream mode...");
 				uart0_scanf(buffer,4,0); // get storm master boot record code
 				if((buffer[0] == 'S') && (buffer[1] == 'M') && (buffer[2] == 'B') && (buffer[3] == 'R')){
-//					uart0_printf("Master Boot Record Code OK\r\n");
 					uart0_scanf(buffer,4,0); // get image size
 					adr_buffer = qbytes_to_long(buffer);
-//					if (adr_buffer > RAM_SIZE-8){ 
-					if (adr_buffer > (XRAM_SIZE-SDR_TEST_ADDR_OFFSET)-8){ //sdram change
+					if (adr_buffer > RAM_SIZE-8){
 						uart0_printf(" ERROR! Program file too big!\r\n\r\n");
 						break;
 					}
-// 					data_pointer = 0;
-					data_pointer = SDR_START_ADDRESS + SDR_TEST_ADDR_OFFSET;//sdram change
-//					uart0_printf("Programming Memory starting at Test memory\r\n"); 
-					while(data_pointer <= adr_buffer+4){
+//					data_pointer = 0;
+					data_pointer = (volatile unsigned long *)JUMPADDRESS;
+					while(data_pointer != JUMPADDRESS+(adr_buffer+4) ){
 						uart0_scanf(buffer,4,0); // get word
 						*data_pointer = qbytes_to_long(buffer); // store memory entry
 						data_pointer = data_pointer + 1;
-						//uart0_printf(".");
 					}
-//					uart0_printf("done downloading...restarting");
-					start_app = 0;
+					uart0_printf("\n\r");
+					print_intro();
+					//start_app = 1;
 				}
 				else
 					uart0_printf(" Invalid programming file!\r\n\r\nSelect: ");
@@ -151,14 +149,29 @@ main_menu:
 				while(io_uart0_read_byte() == -1);
 				while(io_uart0_read_byte() != -1);
 //				data_pointer = 0;
-//				while(data_pointer != RAM_SIZE){
-				data_pointer = 0x00009000;//sdram change
-				while(data_pointer <= (0x00009000 + XRAM_SIZE)){ //sdram change
+				data_pointer = (volatile unsigned long *)JUMPADDRESS;
+				
+				
+//				*data_pointer = 0xEA000012;
+				
+				 
+				
+				
+				while(data_pointer != JUMPADDRESS +2532){
 					word_buffer = *data_pointer;
-					io_uart0_send_byte(word_buffer >> 24);
-					io_uart0_send_byte(word_buffer >> 16);
-					io_uart0_send_byte(word_buffer >>  8);
-					io_uart0_send_byte(word_buffer >>  0);
+					long_to_hex_string(word_buffer, temp_string,8);
+					i=0;
+					//ch=temp_string[i];
+					while (temp_string[i] != 0) {
+						io_uart0_send_byte(temp_string[i]);
+						i++;
+						//ch=temp_string[i];
+					}
+					io_uart0_send_byte(' ');
+					// io_uart0_send_byte(word_buffer >> 24);
+					// io_uart0_send_byte(word_buffer >> 16);
+					// io_uart0_send_byte(word_buffer >>  8);
+					// io_uart0_send_byte(word_buffer >>  0);
 					data_pointer++;
 					if(io_uart0_read_byte() != -1){
 						break;
@@ -167,7 +180,6 @@ main_menu:
 				}
 				uart0_printf("\r\n\r\nDumping completed.\r\n\r\nSelect: ");
 				break;
-
 			// boot from I²C EEPROM
 			// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 			case '3':
@@ -369,13 +381,20 @@ main_menu:
 
 	// start application
 	uart0_printf("\r\n\r\n-> Starting application...\r\n\r\n");
-	set_syscpreg(0x00, SYS_IO);
+	set_syscpreg(0x00, SYS_IO);  // set System IO ouputs to low.
 
 	// disable write-through strategy
 	set_syscpreg(get_syscpreg(SYS_CTRL_0) & ~(1<<DC_WTHRU), SYS_CTRL_0);
 
+	// clear D-cache
+	set_syscpreg(get_syscpreg(SYS_CTRL_0) | ~(1<<DC_CLEAR), SYS_CTRL_0);
+	
+	// clear I-cache
+//	set_syscpreg(get_syscpreg(SYS_CTRL_0) | ~(1<<IC_CLEAR), SYS_CTRL_0);
+
+//	set_syscpreg(((get_syscpreg(SYS_CTRL_0) & (0x0000FFFF)) | (0x00080000)) , SYS_CTRL_0);
 	// jump to application
-//sdram change	asm volatile ("mov pc, #0");
-	asm volatile ("mov pc, #0x05000000");
+	//asm volatile ("mov pc, #0");
+	_jump_to_program(JUMPADDRESS);
 	while(1);
 }

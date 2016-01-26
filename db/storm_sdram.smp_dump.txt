@@ -29,38 +29,6 @@ c_state.wr_b 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
 c_state.wr_c 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 
 c_state.wr_d 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 
 
-State Machine - |STORM_SoC_basic|amber_uart:GP_UART_1|rxd_state
-Name rxd_state.RXD_STOP rxd_state.RXD_DATA7 rxd_state.RXD_DATA6 rxd_state.RXD_DATA5 rxd_state.RXD_DATA4 rxd_state.RXD_DATA3 rxd_state.RXD_DATA2 rxd_state.RXD_DATA1 rxd_state.RXD_DATA0 rxd_state.RXD_START_MID1 rxd_state.RXD_START_MID rxd_state.RXD_START rxd_state.RXD_IDLE 
-rxd_state.RXD_IDLE 0 0 0 0 0 0 0 0 0 0 0 0 0 
-rxd_state.RXD_START 0 0 0 0 0 0 0 0 0 0 0 1 1 
-rxd_state.RXD_START_MID 0 0 0 0 0 0 0 0 0 0 1 0 1 
-rxd_state.RXD_START_MID1 0 0 0 0 0 0 0 0 0 1 0 0 1 
-rxd_state.RXD_DATA0 0 0 0 0 0 0 0 0 1 0 0 0 1 
-rxd_state.RXD_DATA1 0 0 0 0 0 0 0 1 0 0 0 0 1 
-rxd_state.RXD_DATA2 0 0 0 0 0 0 1 0 0 0 0 0 1 
-rxd_state.RXD_DATA3 0 0 0 0 0 1 0 0 0 0 0 0 1 
-rxd_state.RXD_DATA4 0 0 0 0 1 0 0 0 0 0 0 0 1 
-rxd_state.RXD_DATA5 0 0 0 1 0 0 0 0 0 0 0 0 1 
-rxd_state.RXD_DATA6 0 0 1 0 0 0 0 0 0 0 0 0 1 
-rxd_state.RXD_DATA7 0 1 0 0 0 0 0 0 0 0 0 0 1 
-rxd_state.RXD_STOP 1 0 0 0 0 0 0 0 0 0 0 0 1 
-
-State Machine - |STORM_SoC_basic|amber_uart:GP_UART_1|txd_state
-Name txd_state.TXD_STOP3 txd_state.TXD_STOP2 txd_state.TXD_STOP1 txd_state.TXD_DATA7 txd_state.TXD_DATA6 txd_state.TXD_DATA5 txd_state.TXD_DATA4 txd_state.TXD_DATA3 txd_state.TXD_DATA2 txd_state.TXD_DATA1 txd_state.TXD_DATA0 txd_state.TXD_START txd_state.TXD_IDLE 
-txd_state.TXD_IDLE 0 0 0 0 0 0 0 0 0 0 0 0 0 
-txd_state.TXD_START 0 0 0 0 0 0 0 0 0 0 0 1 1 
-txd_state.TXD_DATA0 0 0 0 0 0 0 0 0 0 0 1 0 1 
-txd_state.TXD_DATA1 0 0 0 0 0 0 0 0 0 1 0 0 1 
-txd_state.TXD_DATA2 0 0 0 0 0 0 0 0 1 0 0 0 1 
-txd_state.TXD_DATA3 0 0 0 0 0 0 0 1 0 0 0 0 1 
-txd_state.TXD_DATA4 0 0 0 0 0 0 1 0 0 0 0 0 1 
-txd_state.TXD_DATA5 0 0 0 0 0 1 0 0 0 0 0 0 1 
-txd_state.TXD_DATA6 0 0 0 0 1 0 0 0 0 0 0 0 1 
-txd_state.TXD_DATA7 0 0 0 1 0 0 0 0 0 0 0 0 1 
-txd_state.TXD_STOP1 0 0 1 0 0 0 0 0 0 0 0 0 1 
-txd_state.TXD_STOP2 0 1 0 0 0 0 0 0 0 0 0 0 1 
-txd_state.TXD_STOP3 1 0 0 0 0 0 0 0 0 0 0 0 1 
-
 State Machine - |STORM_SoC_basic|wb_sdram_ctrl:SDRAM_CTRL_0|arbiter:arbiter|wb_port:wbports[0].wb_port|sdram_state
 Name sdram_state.IDLE sdram_state.WRITE sdram_state.READ 
 sdram_state.IDLE 0 0 0 

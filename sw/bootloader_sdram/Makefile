@@ -29,7 +29,7 @@
 #
 
 # MCU name and submodel
-MCU = arm7m
+MCU = arm7
 SUBMDL = STORMcore
 
 
@@ -129,7 +129,7 @@ CFLAGS += -Wredundant-decls -Wreturn-type -Wshadow -Wunused
 #CFLAGS += -Wa,-adhlns=$(<:.c=.lst) 
 CFLAGS += -Wa,-adhlns=$(subst $(suffix $<),.lst,$<) 
 CFLAGS += $(patsubst %,-I%,$(EXTRAINCDIRS))
-CFLAGS += -mno-thumb-interwork
+CFLAGS += -mno-thumb-interwork -msoft-float -march=armv3
 # flags only for C
 CONLYFLAGS  = -Wstrict-prototypes -Wmissing-declarations
 CONLYFLAGS += -Wmissing-prototypes -Wnested-externs 
@@ -201,12 +201,12 @@ LPC21ISP_CONTROL = -control
 
 # Define programs and commands.
 SHELL = sh
-CC = arm-none-linux-gnueabi-gcc -mbig-endian
-CPP = arm-none-linux-gnueabi-g++
-OBJCOPY = arm-none-linux-gnueabi-objcopy
-OBJDUMP = arm-none-linux-gnueabi-objdump
-SIZE = arm-none-linux-gnueabi-size
-NM = arm-none-linux-gnueabi-nm
+CC = arm-elf-gcc -mbig-endian
+CPP = arm-elf-g++
+OBJCOPY = arm-elf-objcopy
+OBJDUMP = arm-elf-objdump
+SIZE = arm-elf-size
+NM = arm-elf-nm
 REMOVE = rm -f
 COPY = cp
 
@@ -252,7 +252,7 @@ GENDEPFLAGS = -MD -MP -MF .dep/$(@F).d
 # Combine all necessary flags and optional flags.
 # Add target processor to flags.
 ALL_CFLAGS = -mcpu=$(MCU) $(THUMB_IW) -I. $(CFLAGS) $(GENDEPFLAGS)
-ALL_ASFLAGS = -mcpu=$(MCU) $(THUMB_IW) -I. -x assembler-with-cpp $(ASFLAGS)
+ALL_ASFLAGS = -mcpu=$(MCU) -march=armv3 $(THUMB_IW) -I. -x assembler-with-cpp $(ASFLAGS)
 
 
 # Default target.

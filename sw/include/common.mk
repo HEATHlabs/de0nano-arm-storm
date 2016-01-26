@@ -102,6 +102,7 @@ endif
  CFLAGS = -c $(OPTIMIZE) -march=armv3 -mno-thumb-interwork -ffreestanding -I../include  -mbig-endian -mwords-little-endian
 # CFLAGS = -c $(OPTIMIZE) -march=armv2a -mno-thumb-interwork -ffreestanding -I../include
 #  CFLAGS = -c $(OPTIMIZE) -march=armv2a -mno-thumb-interwork -ffreestanding -I../include -nostdlib #added for memtest
+CFLAGS += -Wa,-adhlns=$(subst $(suffix $<),.lst,$<)  
  DSFLAGS = -C -S -EL
  LDFLAGS = -Bstatic -Map $(MAP) --strip-debug --fix-v4bx
 # LDFLAGS = -Bstatic -Map $(MAP) --strip-debug --fix-v4bx -lc -lgcc #added for memtest

@@ -163,165 +163,169 @@
  160 00e8 E1A02000 	        mov   r2,r0
  161 00ec E1A0B000 	        mov   fp,r0                     // null frame pointer
  162 00f0 E1A07000 	        mov   r7,r0                     // null frame pointer for thumb
- 163 00f4 E59FA188 	        ldr   r10,=main
- 164 00f8 E1A0E00F 	        mov   lr,pc
- 165 00fc E12FFF1A 	        bx    r10                       // enter main()
- 166              	
- 168              	        .endfunc
- 169              	
- 170              	        .global _reset, reset, exit, abort
- 171              	        .func   _reset
- 172              	_reset:
- 173              	reset:
- 174              	exit:
- 175              	abort:
- 176              	
- 177 0100 EAFFFFFE 	        b     .                         // loop until reset
- 178              	
- 179              	// Data Fetch Abort Interrupt Handler
- 180              	// -------------------------------------------------------------------
- 181              	dab_handler:
- 182 0104 E1A0D00E 			mov   r13, lr
- 183 0108 E3A04010 			mov   r4, #16
- 184 010c EE0D4F1D 			mcr   p15, 0, r4, c13, c13, 0
- 185 0110 E3A0403C 			mov   r4, #'<'
- 186 0114 EB000051 			bl    uart0_send_byte
- 187 0118 E3A04044 			mov   r4, #'D'
- 188 011c EB00004F 			bl    uart0_send_byte
- 189 0120 E3A04041 			mov   r4, #'A'
- 190 0124 EB00004D 			bl    uart0_send_byte
- 191 0128 E3A04042 			mov   r4, #'B'
- 192 012c EB00004B 			bl    uart0_send_byte
- 193 0130 EA000022 			b     isr_handler
- 194              	
- 195              	// Instruction Fetch Abort Interrupt Handler
- 196              	// -------------------------------------------------------------------
- 197              	iab_handler:
- 198 0134 E1A0D00E 			mov   r13, lr
- 199 0138 E3A04020 			mov   r4, #32
- 200 013c EE0D4F1D 			mcr   p15, 0, r4, c13, c13, 0
- 201 0140 E3A0403C 			mov   r4, #'<'
- 202 0144 EB000045 			bl    uart0_send_byte
- 203 0148 E3A04049 			mov   r4, #'I'
- 204 014c EB000043 			bl    uart0_send_byte
- 205 0150 E3A04041 			mov   r4, #'A'
- 206 0154 EB000041 			bl    uart0_send_byte
- 207 0158 E3A04042 			mov   r4, #'B'
- 208 015c EB00003F 			bl    uart0_send_byte
- 209 0160 EA000016 			b     isr_handler
- 210              	
- 211              	// Software Interrupt Handler
- 212              	// -------------------------------------------------------------------
- 213              	swi_handler:
- 214 0164 E1A0D00E 			mov   r13, lr
- 215 0168 E3A04040 			mov   r4, #64
- 216 016c EE0D4F1D 			mcr   p15, 0, r4, c13, c13, 0
- 217 0170 E3A0403C 			mov   r4, #'<'
- 218 0174 EB000039 			bl    uart0_send_byte
- 219 0178 E3A04053 			mov   r4, #'S'
- 220 017c EB000037 			bl    uart0_send_byte
- 221 0180 E3A04057 			mov   r4, #'W'
- 222 0184 EB000035 			bl    uart0_send_byte
- 223 0188 E3A04049 			mov   r4, #'I'
- 224 018c EB000033 			bl    uart0_send_byte
- 225 0190 EA00000A 			b     isr_handler
- 226              	
- 227              	// Undefined Instruction Interrupt Handler
- 228              	// -------------------------------------------------------------------
- 229              	und_handler:
- 230 0194 E1A0D00E 			mov   r13, lr
- 231 0198 E3A04080 			mov   r4, #128
- 232 019c EE0D4F1D 			mcr   p15, 0, r4, c13, c13, 0
- 233 01a0 E3A0403C 			mov   r4, #'<'
- 234 01a4 EB00002D 			bl    uart0_send_byte
- 235 01a8 E3A04055 			mov   r4, #'U'
- 236 01ac EB00002B 			bl    uart0_send_byte
- 237 01b0 E3A0404E 			mov   r4, #'N'
- 238 01b4 EB000029 			bl    uart0_send_byte
- 239 01b8 E3A04044 			mov   r4, #'D'
- 240 01bc EB000027 			bl    uart0_send_byte
- 241              	
- 242              	// Interrupt Handler
- 243              	// -------------------------------------------------------------------
- 244              	isr_handler:
- 245 01c0 E3A0402D 			mov   r4, #'-'
- 246 01c4 EB000025 			bl    uart0_send_byte
- 247 01c8 E3A04049 			mov   r4, #'I'
- 248 01cc EB000023 			bl    uart0_send_byte
- 249 01d0 E3A0404E 			mov   r4, #'N'
- 250 01d4 EB000021 			bl    uart0_send_byte
- 251 01d8 E3A04054 			mov   r4, #'T'
- 252 01dc EB00001F 			bl    uart0_send_byte
- 253 01e0 E3A04020 			mov   r4, #' '
- 254 01e4 EB00001D 			bl    uart0_send_byte
- 255 01e8 E3A04040 			mov   r4, #'@'
- 256 01ec EB00001B 			bl    uart0_send_byte
- 257              	
- 258 01f0 E24D7004 			sub   r7, r13, #4
- 259 01f4 EB00000A 			bl    uart0_print_hex
- 260              	
- 261 01f8 E3A04020 			mov   r4, #' '
- 262 01fc EB000017 			bl    uart0_send_byte
- 263 0200 E3A0405B 			mov   r4, #'['		
- 264 0204 EB000015 			bl    uart0_send_byte
- 265              	
- 266 0208 EE197F19 			mrc   p15,0,r7, c9, c9
- 267 020c EB000004 			bl    uart0_print_hex
- 268              	
- 269 0210 E3A0405D 			mov   r4, #']'
- 270 0214 EB000011 			bl    uart0_send_byte
- 271 0218 E3A0403E 			mov   r4, #'>'
- 272 021c EB00000F 			bl    uart0_send_byte
- 273 0220 EAFFFFFE 			b .
- 274              	
- 275              	
- 276              	// Send 32-bit HEX value via UART0
- 277              	// -------------------------------------------------------------------
- 278              	uart0_print_hex:
- 279 0224 E1A0900E 			mov   r9, lr // save link register
- 280 0228 E3A08020 			mov   r8, #32
- 281              	
- 282              	uart0_print_hex_loop:
- 283 022c E3580000 			cmp   r8, #0
- 284 0230 01A0F009 			moveq pc, r9
+ 163              	 //       ldr   r10,=main
+ 164              	//        mov   lr,pc
+ 165              	 //       b    r10                       // enter main()
+ 166              	//        bx    r10                       // enter main()
+ 167 00f4 E59FA188 	        ldr   r10,=main
+ 168 00f8 E1A0E00F 	        mov   lr,pc
+ 169 00fc E1A0F00A 	        mov   pc, r10                   // enter main()
+ 170              	
+ 172              	        .endfunc
+ 173              	
+ 174              	        .global _reset, reset, exit, abort
+ 175              	        .func   _reset
+ 176              	_reset:
+ 177              	reset:
+ 178              	exit:
+ 179              	abort:
+ 180              	
+ 181 0100 EAFFFFFE 	        b     .                         // loop until reset
+ 182              	
+ 183              	// Data Fetch Abort Interrupt Handler
+ 184              	// -------------------------------------------------------------------
+ 185              	dab_handler:
+ 186 0104 E1A0D00E 			mov   r13, lr
+ 187 0108 E3A04010 			mov   r4, #16
+ 188 010c EE0D4F1D 			mcr   p15, 0, r4, c13, c13, 0
+ 189 0110 E3A0403C 			mov   r4, #'<'
+ 190 0114 EB000051 			bl    uart0_send_byte
+ 191 0118 E3A04044 			mov   r4, #'D'
+ 192 011c EB00004F 			bl    uart0_send_byte
+ 193 0120 E3A04041 			mov   r4, #'A'
+ 194 0124 EB00004D 			bl    uart0_send_byte
+ 195 0128 E3A04042 			mov   r4, #'B'
+ 196 012c EB00004B 			bl    uart0_send_byte
+ 197 0130 EA000022 			b     isr_handler
+ 198              	
+ 199              	// Instruction Fetch Abort Interrupt Handler
+ 200              	// -------------------------------------------------------------------
+ 201              	iab_handler:
+ 202 0134 E1A0D00E 			mov   r13, lr
+ 203 0138 E3A04020 			mov   r4, #32
+ 204 013c EE0D4F1D 			mcr   p15, 0, r4, c13, c13, 0
+ 205 0140 E3A0403C 			mov   r4, #'<'
+ 206 0144 EB000045 			bl    uart0_send_byte
+ 207 0148 E3A04049 			mov   r4, #'I'
+ 208 014c EB000043 			bl    uart0_send_byte
+ 209 0150 E3A04041 			mov   r4, #'A'
+ 210 0154 EB000041 			bl    uart0_send_byte
+ 211 0158 E3A04042 			mov   r4, #'B'
+ 212 015c EB00003F 			bl    uart0_send_byte
+ 213 0160 EA000016 			b     isr_handler
+ 214              	
+ 215              	// Software Interrupt Handler
+ 216              	// -------------------------------------------------------------------
+ 217              	swi_handler:
+ 218 0164 E1A0D00E 			mov   r13, lr
+ 219 0168 E3A04040 			mov   r4, #64
+ 220 016c EE0D4F1D 			mcr   p15, 0, r4, c13, c13, 0
+ 221 0170 E3A0403C 			mov   r4, #'<'
+ 222 0174 EB000039 			bl    uart0_send_byte
+ 223 0178 E3A04053 			mov   r4, #'S'
+ 224 017c EB000037 			bl    uart0_send_byte
+ 225 0180 E3A04057 			mov   r4, #'W'
+ 226 0184 EB000035 			bl    uart0_send_byte
+ 227 0188 E3A04049 			mov   r4, #'I'
+ 228 018c EB000033 			bl    uart0_send_byte
+ 229 0190 EA00000A 			b     isr_handler
+ 230              	
+ 231              	// Undefined Instruction Interrupt Handler
+ 232              	// -------------------------------------------------------------------
+ 233              	und_handler:
+ 234 0194 E1A0D00E 			mov   r13, lr
+ 235 0198 E3A04080 			mov   r4, #128
+ 236 019c EE0D4F1D 			mcr   p15, 0, r4, c13, c13, 0
+ 237 01a0 E3A0403C 			mov   r4, #'<'
+ 238 01a4 EB00002D 			bl    uart0_send_byte
+ 239 01a8 E3A04055 			mov   r4, #'U'
+ 240 01ac EB00002B 			bl    uart0_send_byte
+ 241 01b0 E3A0404E 			mov   r4, #'N'
+ 242 01b4 EB000029 			bl    uart0_send_byte
+ 243 01b8 E3A04044 			mov   r4, #'D'
+ 244 01bc EB000027 			bl    uart0_send_byte
+ 245              	
+ 246              	// Interrupt Handler
+ 247              	// -------------------------------------------------------------------
+ 248              	isr_handler:
+ 249 01c0 E3A0402D 			mov   r4, #'-'
+ 250 01c4 EB000025 			bl    uart0_send_byte
+ 251 01c8 E3A04049 			mov   r4, #'I'
+ 252 01cc EB000023 			bl    uart0_send_byte
+ 253 01d0 E3A0404E 			mov   r4, #'N'
+ 254 01d4 EB000021 			bl    uart0_send_byte
+ 255 01d8 E3A04054 			mov   r4, #'T'
+ 256 01dc EB00001F 			bl    uart0_send_byte
+ 257 01e0 E3A04020 			mov   r4, #' '
+ 258 01e4 EB00001D 			bl    uart0_send_byte
+ 259 01e8 E3A04040 			mov   r4, #'@'
+ 260 01ec EB00001B 			bl    uart0_send_byte
+ 261              	
+ 262 01f0 E24D7004 			sub   r7, r13, #4
+ 263 01f4 EB00000A 			bl    uart0_print_hex
+ 264              	
+ 265 01f8 E3A04020 			mov   r4, #' '
+ 266 01fc EB000017 			bl    uart0_send_byte
+ 267 0200 E3A0405B 			mov   r4, #'['		
+ 268 0204 EB000015 			bl    uart0_send_byte
+ 269              	
+ 270 0208 EE197F19 			mrc   p15,0,r7, c9, c9
+ 271 020c EB000004 			bl    uart0_print_hex
+ 272              	
+ 273 0210 E3A0405D 			mov   r4, #']'
+ 274 0214 EB000011 			bl    uart0_send_byte
+ 275 0218 E3A0403E 			mov   r4, #'>'
+ 276 021c EB00000F 			bl    uart0_send_byte
+ 277 0220 EAFFFFFE 			b .
+ 278              	
+ 279              	
+ 280              	// Send 32-bit HEX value via UART0
+ 281              	// -------------------------------------------------------------------
+ 282              	uart0_print_hex:
+ 283 0224 E1A0900E 			mov   r9, lr // save link register
+ 284 0228 E3A08020 			mov   r8, #32
  285              	
- 286 0234 E2488004 			sub   r8, r8, #4
- 287 0238 E1A06837 			mov   r6, r7, lsr r8 // isolate 4-bit value
- 288 023c E206600F 			and   r6, r6, #0x0F
+ 286              	uart0_print_hex_loop:
+ 287 022c E3580000 			cmp   r8, #0
+ 288 0230 01A0F009 			moveq pc, r9
  289              	
- 290 0240 E3560009 			cmp   r6, #9
- 291 0244 CA000001 			bgt   adapt_char
- 292 0248 E2864030 			add   r4, r6, #'0'
+ 290 0234 E2488004 			sub   r8, r8, #4
+ 291 0238 E1A06837 			mov   r6, r7, lsr r8 // isolate 4-bit value
+ 292 023c E206600F 			and   r6, r6, #0x0F
  293              	
- 294 024c EA000001 			b     uart0_print_hex_char
- 295              	adapt_char:
- 296 0250 E246600A 			sub   r6, r6, #10
- 297 0254 E2864041 			add   r4, r6, #'A'
- 298              	
- 299              	uart0_print_hex_char:
- 300 0258 EB000000 			bl    uart0_send_byte
- 301 025c EAFFFFF2 			b     uart0_print_hex_loop
+ 294 0240 E3560009 			cmp   r6, #9
+ 295 0244 CA000001 			bgt   adapt_char
+ 296 0248 E2864030 			add   r4, r6, #'0'
+ 297              	
+ 298 024c EA000001 			b     uart0_print_hex_char
+ 299              	adapt_char:
+ 300 0250 E246600A 			sub   r6, r6, #10
+ 301 0254 E2864041 			add   r4, r6, #'A'
  302              	
- 303              	
- 304              	// Send one char via UART0
- 305              	// -------------------------------------------------------------------
- 306              	uart0_send_byte:
- 307 0260 E59F0020 			ldr   r0, =(0xFFFF001C)
- 308 0264 E5900000 			ldr   r0, [r0]
- 309 0268 E2000001 			and   r0, r0, #0x01
- 310 026c E3500000 			cmp   r0, #0
- 311 0270 0AFFFFFA 			beq   uart0_send_byte
- 312 0274 E59F0010 			ldr   r0, =(0xFFFF0018)
- 313 0278 E5804000 			str   r4, [r0]
- 314 027c E1A0F00E 			mov   pc, lr
- 315              	
- 316              	
- 318              	        .endfunc
+ 303              	uart0_print_hex_char:
+ 304 0258 EB000000 			bl    uart0_send_byte
+ 305 025c EAFFFFF2 			b     uart0_print_hex_loop
+ 306              	
+ 307              	
+ 308              	// Send one char via UART0
+ 309              	// -------------------------------------------------------------------
+ 310              	uart0_send_byte:
+ 311 0260 E59F0020 			ldr   r0, =(0xFFFF001C)
+ 312 0264 E5900000 			ldr   r0, [r0]
+ 313 0268 E2000001 			and   r0, r0, #0x01
+ 314 026c E3500000 			cmp   r0, #0
+ 315 0270 0AFFFFFA 			beq   uart0_send_byte
+ 316 0274 E59F0010 			ldr   r0, =(0xFFFF0018)
+ 317 0278 E5804000 			str   r4, [r0]
+ 318 027c E1A0F00E 			mov   pc, lr
  319              	
- 320 0280 00000000 	        .end
- 320      00000000 
- 320      FFFF001C 
- 320      FFFF0018 
+ 320              	
+ 322              	        .endfunc
+ 323              	
+ 324 0280 00000000 	        .end
+ 324      00000000 
+ 324      FFFF001C 
+ 324      FFFF0018 
 DEFINED SYMBOLS
                             *ABS*:00000000 build/storm_startup_code.S
 build/storm_startup_code.S:11     *ABS*:00000004 UND_STACK_SIZE
@@ -342,9 +346,9 @@ build/storm_startup_code.S:30     .text:00000000 $a
 build/storm_startup_code.S:35     .text:00000000 _boot
 build/storm_startup_code.S:39     .text:00000000 Vectors
 build/storm_startup_code.S:83     .text:00000050 _start
-build/storm_startup_code.S:229    .text:00000194 und_handler
-build/storm_startup_code.S:213    .text:00000164 swi_handler
-build/storm_startup_code.S:197    .text:00000134 iab_handler
+build/storm_startup_code.S:233    .text:00000194 und_handler
+build/storm_startup_code.S:217    .text:00000164 swi_handler
+build/storm_startup_code.S:201    .text:00000134 iab_handler
 build/storm_startup_code.S:60     .text:00000020 _undf
 build/storm_startup_code.S:60     .text:00000020 $d
 build/storm_startup_code.S:67     .text:00000038 __undf
@@ -361,18 +365,18 @@ build/storm_startup_code.S:72     .text:0000004c __fiq
 build/storm_startup_code.S:67     .text:00000038 $a
 build/storm_startup_code.S:84     .text:00000050 start
 build/storm_startup_code.S:85     .text:00000050 _mainCRTStartup
-build/storm_startup_code.S:172    .text:00000100 _reset
-build/storm_startup_code.S:173    .text:00000100 reset
-build/storm_startup_code.S:174    .text:00000100 exit
-build/storm_startup_code.S:175    .text:00000100 abort
-build/storm_startup_code.S:181    .text:00000104 dab_handler
-build/storm_startup_code.S:306    .text:00000260 uart0_send_byte
-build/storm_startup_code.S:244    .text:000001c0 isr_handler
-build/storm_startup_code.S:278    .text:00000224 uart0_print_hex
-build/storm_startup_code.S:282    .text:0000022c uart0_print_hex_loop
-build/storm_startup_code.S:295    .text:00000250 adapt_char
-build/storm_startup_code.S:299    .text:00000258 uart0_print_hex_char
-build/storm_startup_code.S:320    .text:00000280 $d
+build/storm_startup_code.S:176    .text:00000100 _reset
+build/storm_startup_code.S:177    .text:00000100 reset
+build/storm_startup_code.S:178    .text:00000100 exit
+build/storm_startup_code.S:179    .text:00000100 abort
+build/storm_startup_code.S:185    .text:00000104 dab_handler
+build/storm_startup_code.S:310    .text:00000260 uart0_send_byte
+build/storm_startup_code.S:248    .text:000001c0 isr_handler
+build/storm_startup_code.S:282    .text:00000224 uart0_print_hex
+build/storm_startup_code.S:286    .text:0000022c uart0_print_hex_loop
+build/storm_startup_code.S:299    .text:00000250 adapt_char
+build/storm_startup_code.S:303    .text:00000258 uart0_print_hex_char
+build/storm_startup_code.S:324    .text:00000280 $d
 
 UNDEFINED SYMBOLS
 main

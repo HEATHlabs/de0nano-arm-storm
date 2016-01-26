@@ -10,13 +10,13 @@ STACK_SIZE = 0x4000;
 MEMORY
 {
   ROM (rx)  : ORIGIN = 0x00010000, LENGTH = 0x00000800
-  RAM (rwx) : ORIGIN = 0x00004000, LENGTH = 0x00008000
+  RAM (rwx) : ORIGIN = 0x00000000, LENGTH = 0x00008000
 }
 
 /* Section Definitions */
 SECTIONS
 {
-        . = 0x00004000;
+/*        . = 0x00004000;*/
 
   /* first section is .text which is used for code */
   .text :

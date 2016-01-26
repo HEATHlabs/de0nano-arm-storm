@@ -16,7 +16,7 @@ package STORM_core_package is
   -- ARCHITECTURE CONSTANTS -----------------------------------------------------------------
   -- -------------------------------------------------------------------------------------------
 	constant STORM_MODE       : boolean := FALSE; -- use STORM extension architecture
-	constant USE_BIG_ENDIAN   : boolean := TRUE;  -- use big endian memory
+	constant USE_BIG_ENDIAN   : boolean := TRUE;  -- use big endian memory/orig
 --	constant USE_BIG_ENDIAN   : boolean := FALSE;  -- use big endian memory
 	constant DATA_WIDTH       : natural := 32;    -- operation data width
 	constant SHIN_EN          : boolean := FALSE; -- enable short instruction mode
