@@ -63,7 +63,7 @@ void print_intro(){
 	io_i2c0_speed(0x0063); // 100kHz
 
 	// enable write-through strategy
-	set_syscpreg(get_syscpreg(SYS_CTRL_0) | (1<<DC_WTHRU), SYS_CTRL_0);
+	set_syscpreg(get_syscpreg(SYS_CTRL_0) & ~(1<<DC_WTHRU), SYS_CTRL_0);
 
 	// Check config switches for immediate boot-config
 	function_sel = (int)((~(get_syscpreg(SYS_IO) >> 17)) & 0x0F);

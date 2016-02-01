@@ -55,6 +55,7 @@ architecture Behavioral of BOOT_ROM_FILE is
 -- # STORM SoC Basic Configuration Bootloader                                 #
 -- # 8*1024 byte ROM, 32*1024 byte RAM                                        #
 -- ############################################################################
+-- bootloader_sdram
 	constant STORM_SOC_BASIC_BL_32_8 : BOOT_ROM_TYPE :=
 	(
 000000 => x"EA000006",
@@ -561,7 +562,7 @@ architecture Behavioral of BOOT_ROM_FILE is
 000501 => x"E3A00006",
 000502 => x"EBFFFF08",
 000503 => x"E3A01006",
-000504 => x"E3800008",
+000504 => x"E3C00008",
 000505 => x"EBFFFF3B",
 000506 => x"E3A0000D",
 000507 => x"EBFFFF03",

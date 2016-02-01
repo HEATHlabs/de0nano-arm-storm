@@ -1,16 +1,16 @@
-Fitter Status : Successful - Mon Jan 25 22:43:17 2016
+Fitter Status : Successful - Sun Jan 31 22:02:39 2016
 Quartus II 64-Bit Version : 13.0.1 Build 232 06/12/2013 SP 1 SJ Web Edition
 Revision Name : storm
 Top-level Entity Name : STORM_SoC_basic
 Family : Cyclone IV E
 Device : EP4CE22F17C6
 Timing Models : Final
-Total logic elements : 15,477 / 22,320 ( 69 % )
-    Total combinational functions : 13,271 / 22,320 ( 59 % )
-    Dedicated logic registers : 8,514 / 22,320 ( 38 % )
-Total registers : 8514
+Total logic elements : 20,481 / 22,320 ( 92 % )
+    Total combinational functions : 15,259 / 22,320 ( 68 % )
+    Dedicated logic registers : 13,253 / 22,320 ( 59 % )
+Total registers : 13253
 Total pins : 99 / 154 ( 64 % )
 Total virtual pins : 0
-Total memory bits : 487,680 / 608,256 ( 80 % )
+Total memory bits : 490,240 / 608,256 ( 81 % )
 Embedded Multiplier 9-bit elements : 6 / 132 ( 5 % )
 Total PLLs : 1 / 4 ( 25 % )
