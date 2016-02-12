@@ -180,8 +180,21 @@ begin
 
 		--- Wishbone Bus ---
 		WB_SEL_O       <= "1111"; -- cache entry = 32-bit word
-		WB_DATA_FF_NXT <= x"00000000"    when (ARB_STATE = IDLE) else DC_DATA_I; -- reduce switching losses...
-		WB_DATA_O      <= WB_DATA_FF_NXT when ((ARB_STATE = UPLOAD_D_PAGE)) else WB_DATA_FF;
+
+
+		--when ACK_I = 0 then WB_Data_O stays the same
+--		WB_DATA_FF_NXT <= x"00000000"    when (ARB_STATE = IDLE) else DC_DATA_I; -- reduce switching losses...
+
+		WB_DATA_FF_NXT <= x"00000000"    when (ARB_STATE = IDLE) else 
+								DC_DATA_I when (WB_HALT_I  = '0') else
+								(others=>'0'); -- reduce switching losses...
+					
+		--see [wb_write_2]
+--		 WB_DATA_O      <= WB_DATA_FF_NXT when ((ARB_STATE = UPLOAD_D_PAGE) AND (WB_ACK_I = '1')) else 
+--							    WB_DATA_FF when ((WB_ACK_I = '1') and not (ARB_STATE = UPLOAD_D_PAGE) )  else
+--							    (others=>'0');
+								 
+			WB_DATA_O      <= WB_DATA_FF_NXT when (ARB_STATE = UPLOAD_D_PAGE) else WB_DATA_FF;
 
 		--- IO Access ---
 		IO_ACCESS <= '1' when (DC_P_ADR_I >= IO_UC_BEGIN) and (DC_P_ADR_I <= IO_UC_END) and (CACHED_IO_I = '0') else '0';
@@ -477,6 +490,7 @@ begin
 							DC_DRT_ACK_O <= '1'; -- ack of dirty signal
 						end if;
 					end if;
+					-- only increment address if slave is ready.
 					if ((DC_ADR_BUF < Std_Logic_Vector(unsigned(BASE_BUF) + (D_CACHE_PAGE_SIZE-1)*4)) and (WB_ACK_I ='1')) then
 						DC_ADR_BUF_NXT <= Std_Logic_Vector(unsigned(DC_ADR_BUF) + 4); -- inc mem pointer
 						WB_ADR_BUF_NXT <= Std_Logic_Vector(unsigned(WB_ADR_BUF) + 4); -- inc wb pointer
