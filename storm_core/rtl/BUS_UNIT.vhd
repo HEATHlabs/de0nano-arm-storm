@@ -183,11 +183,11 @@ begin
 
 
 		--when ACK_I = 0 then WB_Data_O stays the same
---		WB_DATA_FF_NXT <= x"00000000"    when (ARB_STATE = IDLE) else DC_DATA_I; -- reduce switching losses...
+		WB_DATA_FF_NXT <= x"00000000"    when (ARB_STATE = IDLE) else DC_DATA_I; -- reduce switching losses...
 
-		WB_DATA_FF_NXT <= x"00000000"    when (ARB_STATE = IDLE) else 
-								DC_DATA_I when (WB_HALT_I  = '0') else
-								(others=>'0'); -- reduce switching losses...
+--		WB_DATA_FF_NXT <= x"00000000"    when (ARB_STATE = IDLE) else 
+--								DC_DATA_I when (WB_HALT_I  = '0') else
+--								(others=>'0'); -- reduce switching losses...
 					
 		--see [wb_write_2]
 --		 WB_DATA_O      <= WB_DATA_FF_NXT when ((ARB_STATE = UPLOAD_D_PAGE) AND (WB_ACK_I = '1')) else 
@@ -235,7 +235,7 @@ begin
 					WORD_BUF     <= (others => '0');
 				else
 					-- Arbiter CTRL --
-					if ((WB_HALT_I = '0')) then
+					--if ((WB_HALT_I = '0')) then
 					ARB_STATE    <= ARB_STATE_NXT;
 					BIT_BUF      <= BIT_BUF_NXT;
 					WORD_BUF     <= WORD_BUF_NXT;
@@ -250,7 +250,7 @@ begin
 						WB_CYC_O     <= WB_CYC_O_NXT;
 						WB_WE_O      <= WB_WE_O_NXT;
 					-- Bus interface --
-					--if (WB_HALT_I = '0') then
+					if (WB_HALT_I = '0') then
 						-- Wishbone Sync --
 						WB_DATA_BUF <= WB_DATA_I;
 						WB_ACK_BUF  <= WB_ACK_I;
@@ -274,7 +274,7 @@ begin
 		ARBITER_ASYNC: process(ARB_STATE,  STORM_MODE_I, FREEZE_FLAG, BASE_BUF,   TIMEOUT_CNT, IO_ACCESS,  BIT_BUF,    WORD_BUF,  PROTECTED_IO_I,
 		                       DC_ADR_BUF, DC_P_ADR_BUF, DC_P_ADR_I,  PAGE_BUF,   DC_D_SEL_I,  DC_A_SEL_I, DC_DIRTY_I, DC_MISS_I, DC_P_WE_I,      DC_P_CS_I,
 		                       IC_ADR_BUF, IC_P_ADR_BUF, IC_MISS_I,
-		                       WB_ADR_BUF, WB_ACK_BUF,   WB_ACK_I,    WB_ACK_CNT, WB_ERR_BUF,  C_BUS_CYCC_I)
+		                       WB_ADR_BUF, WB_ACK_BUF,   WB_ACK_I, WB_HALT_I, WB_ACK_CNT, WB_ERR_BUF,  C_BUS_CYCC_I)
 			variable IF_BASE_ADR_V, DF_BASE_ADR_V : STD_LOGIC_VECTOR(31 downto 0);
 		begin
 			--- Base Address Alignment ---
@@ -491,9 +491,14 @@ begin
 						end if;
 					end if;
 					-- only increment address if slave is ready.
-					if ((DC_ADR_BUF < Std_Logic_Vector(unsigned(BASE_BUF) + (D_CACHE_PAGE_SIZE-1)*4)) and (WB_ACK_I ='1')) then
-						DC_ADR_BUF_NXT <= Std_Logic_Vector(unsigned(DC_ADR_BUF) + 4); -- inc mem pointer
-						WB_ADR_BUF_NXT <= Std_Logic_Vector(unsigned(WB_ADR_BUF) + 4); -- inc wb pointer
+					if ((DC_ADR_BUF < Std_Logic_Vector(unsigned(BASE_BUF) + (D_CACHE_PAGE_SIZE-1)*4)) ) then
+						if (WB_HALT_I ='0') then
+							DC_ADR_BUF_NXT <= Std_Logic_Vector(unsigned(DC_ADR_BUF) + 4); -- inc mem pointer
+							WB_ADR_BUF_NXT <= Std_Logic_Vector(unsigned(WB_ADR_BUF) + 4); -- inc wb pointer
+						else 
+							DC_ADR_BUF_NXT <= Std_Logic_Vector(unsigned(DC_ADR_BUF)  ); -- inc mem pointer
+							WB_ADR_BUF_NXT <= Std_Logic_Vector(unsigned(WB_ADR_BUF)  ); -- inc wb pointer
+						end if;
 					end if;
 					-- Timeout or abnormal cycle termination --
 					if (TIMEOUT_CNT > C_BUS_CYCC_I) or (WB_ERR_BUF = '1') then

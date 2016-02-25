@@ -23,9 +23,6 @@
  * WORK, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
- /* Jeremy H. these parameters are for the DE0-nano.  Consult your SDRAM
- Datasheet. 
- */
 module wb_sdram_ctrl #(
 	parameter TECHNOLOGY	= "ALTERA",
 	parameter CLK_FREQ_MHZ	= 100,	// sdram_clk freq in MHZ
@@ -41,6 +38,7 @@ module wb_sdram_ctrl #(
 	parameter tRP		= 2,	// Command Period (PRE to ACT)
 	parameter tRC		= 9,	// Command Period (REF to REF / ACT to ACT)
 	parameter tMRD		= 2	// Mode Register Set To Command Delay time
+
 )
 (
 	// SDRAM interface
@@ -123,12 +121,12 @@ module wb_sdram_ctrl #(
 		.we_i		(sdram_if_we)
 	);
 
-	arbiter #(
+	wb_port_arbiter #(
 		.TECHNOLOGY	(TECHNOLOGY),
 		.WB_PORTS	(WB_PORTS),
 		.BUF_WIDTH	(BUF_WIDTH)
 	)
-	arbiter (
+	wb_port_arbiter (
 		.wb_clk		(wb_clk),
 		.wb_rst		(wb_rst),
 

@@ -29,13 +29,13 @@ c_state.wr_b 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
 c_state.wr_c 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 
 c_state.wr_d 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 
 
-State Machine - |STORM_SoC_basic|wb_sdram_ctrl:SDRAM_CTRL_0|arbiter:arbiter|wb_port:wbports[0].wb_port|sdram_state
+State Machine - |STORM_SoC_basic|wb_sdram_ctrl:SDRAM_CTRL_0|wb_port_arbiter:wb_port_arbiter|wb_port:wbports[0].wb_port|sdram_state
 Name sdram_state.IDLE sdram_state.WRITE sdram_state.READ 
 sdram_state.IDLE 0 0 0 
 sdram_state.READ 1 0 1 
 sdram_state.WRITE 1 1 0 
 
-State Machine - |STORM_SoC_basic|wb_sdram_ctrl:SDRAM_CTRL_0|arbiter:arbiter|wb_port:wbports[0].wb_port|wb_state
+State Machine - |STORM_SoC_basic|wb_sdram_ctrl:SDRAM_CTRL_0|wb_port_arbiter:wb_port_arbiter|wb_port:wbports[0].wb_port|wb_state
 Name wb_state.REFILL wb_state.WRITE wb_state.READ wb_state.IDLE 
 wb_state.IDLE 0 0 0 0 
 wb_state.READ 0 0 1 1 
